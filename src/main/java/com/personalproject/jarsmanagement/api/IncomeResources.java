@@ -14,10 +14,10 @@ import java.util.List;
 public class IncomeResources {
     private final IncomeService incomeService;
 
-    @GetMapping("/incomesourcelist/{userId}")
-    public List<String>listIncomeSourceByUserId(@PathVariable int userId){
-        return incomeService.listIncomeSourceByUserId(userId);
-    }
+//    @GetMapping("/incomesourcelist/{userId}")
+//    public List<String>listIncomeSourceByUserId(@PathVariable int userId){
+//        return incomeService.listIncomeSourceByUserId(userId);
+//    }
 
     @PostMapping
     public Income createIncome(@RequestBody IncomeDTO incomeDTO){
