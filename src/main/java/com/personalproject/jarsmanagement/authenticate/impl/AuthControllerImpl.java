@@ -48,8 +48,8 @@ public class AuthControllerImpl implements AuthController {
                 userDetails.getUsername(),
                 roles));
     }
-//    public ResponseEntity<User> createAccount( UserDTO userDTO) {
-//        return ResponseEntity.ok(userService.createUser(userDTO));
-//    }
+    public ResponseEntity<User> createAccount( UserDTO userDTO) {
+        return ResponseEntity.ok(userService.createUser(userDTO));
+    }
 
 }
