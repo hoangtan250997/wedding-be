@@ -29,5 +29,7 @@ public class User {
 	private String password;
 	private Boolean active;
 
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "users",cascade = CascadeType.PERSIST)
+	private List<UserRoleAssignment> roles = new ArrayList<>();
 
 }

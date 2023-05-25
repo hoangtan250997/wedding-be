@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/account")
 public class AccountResources {
     private final AccountService accountService;
-
     @GetMapping
     ResponseEntity<List<Account>> findAllAccount(){
         return ResponseEntity.ok(accountService.findAllAccount());
