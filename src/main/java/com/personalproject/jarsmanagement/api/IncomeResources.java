@@ -10,18 +10,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/income")
+@RequestMapping("/{userId}/income")
 public class IncomeResources {
     private final IncomeService incomeService;
 
-//    @GetMapping("/incomesourcelist/{userId}")
-//    public List<String>listIncomeSourceByUserId(@PathVariable int userId){
-//        return incomeService.listIncomeSourceByUserId(userId);
-//    }
+    @GetMapping("/incomesourcelist")
+    public List<String>listIncomeSourceByUserId(@PathVariable int userId){
+        return incomeService.listIncomeSourceByUserId(userId);
+    }
 
     @PostMapping
-    public Income createIncome(@RequestBody IncomeDTO incomeDTO){
-        return incomeService.createIncome(incomeDTO);
+    public Income createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int userId){
+        return incomeService.createIncome(incomeDTO,userId);
+    }
+
+    @GetMapping
+    public List<Income> findByIncomeSourceIdAndUserId(@PathVariable int userId,@RequestParam int incomeId){
+        return incomeService.findByIncomeSourceIdAndUserId(userId,incomeId);
     }
 
 }

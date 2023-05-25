@@ -19,16 +19,21 @@ public class IncomeServiceImpl implements IncomeService {
     private final UserService userService;
 
     @Override
-    public Income createIncome(IncomeDTO incomeDTO) {
+    public Income createIncome(IncomeDTO incomeDTO,int userId) {
         Income income = new Income();
         income.setAmount(incomeDTO.getAmount());
         income.setIncomeSource(incomeSourceRepository.findById(incomeDTO.getIncomeSourceId()).get());
-        income.setUser(userService.findById(incomeDTO.getUserId()));
+        income.setUser(userService.findById(userId));
         return incomeRepository.save(income);
     }
 
     @Override
     public List<String> listIncomeSourceByUserId(int userId) {
         return incomeRepository.listIncomeSourceByUserId(userId);
+    }
+
+    @Override
+    public List<Income> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId) {
+        return incomeRepository.findByIncomeSourceIdAndUserId(incomeSourceId,userId);
     }
 }

@@ -15,4 +15,7 @@ public interface IncomeRepository extends JpaRepository<Income,Integer> {
             "WHERE i.incomeSource.id = s.id " +
             "AND i.user.id = ?1")
     List<String> listIncomeSourceByUserId(int userId);
+
+    List<Income> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId);
+
 }
