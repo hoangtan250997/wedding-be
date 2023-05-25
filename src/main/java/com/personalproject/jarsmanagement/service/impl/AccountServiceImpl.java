@@ -29,5 +29,30 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findAll();
     }
 
+    @Override
+    public Account createAccount(AccountDTO accountDTO) {
+        //UserDTO
+        UserDTO userDTO = new UserDTO();
+        userDTO.setRole(accountDTO.getRole());
+        userDTO.setPassword(accountDTO.getPassword());
+        userDTO.setUsername(accountDTO.getUsername());
+        userDTO.setActive(accountDTO.isActive());
+
+        //Create User
+        User user=  userService.createUser(userDTO);
+
+        //Create Account
+        Account account = new Account();
+
+        account.setUser(user);
+        account.setEmail(accountDTO.getEmail());
+        account.setFamily(accountDTO.getFamily());
+        account.setLastName(accountDTO.getLastName());
+        account.setFirstName(accountDTO.getFirstName());
+
+
+        return accountRepository.save(account);
+    }
+
 
 }
