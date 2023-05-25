@@ -1,0 +1,21 @@
+package com.personalproject.jarsmanagement.entity;
+
+public enum JarType {
+    NECESSITIES(1),
+    FINANCIAL_FREEDOM(2),
+    lONG_TERM_SAVINGS(3),
+    EDUCATION(4),
+    PLAY(5),
+    GIVE(6);
+
+
+    private int value;
+
+    JarType(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
+}
