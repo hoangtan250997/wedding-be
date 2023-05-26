@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,18 +30,28 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
     }
 
     @Override
-    public IncomeSource createIncomeSource(String name,int userId) {
+    public IncomeSource createIncomeSource(String name, int userId) {
 
-        IncomeSource incomeSource = new IncomeSource();
-        incomeSource.setName(name);
-        incomeSourceRepository.save(incomeSource);
+        List<String> incomeSourceStringList = incomeSourceRepository.findAll().stream()
+                .map(IncomeSource::getName)
+                .collect(Collectors.toList());
 
         Income income = new Income();
-        income.setAmount((double)0);
-        income.setIncomeSource(incomeSource);
-        income.setUser(userRepository.findById(userId).get());
-        incomeRepository.save(income);
+        income.setAmount((double) 0);
 
+        if (incomeSourceStringList.contains(name)) {
+            income.setIncomeSource(incomeSourceRepository.findByName(name));
+            income.setUser(userRepository.findById(userId).get());
+            incomeRepository.save(income);
+        } else {
+            IncomeSource incomeSource = new IncomeSource();
+            incomeSource.setName(name);
+            incomeSourceRepository.save(incomeSource);
+
+            income.setIncomeSource(incomeSource);
+            income.setUser(userRepository.findById(userId).get());
+            incomeRepository.save(income);
+        }
         return incomeSourceRepository.findByName(name);
     }
 

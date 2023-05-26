@@ -10,5 +10,5 @@ public interface IncomeService {
 
     List<String> listIncomeSourceByUserId(int userId);
 
-    List<Income> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId);
+    List<IncomeDTO> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId);
 }

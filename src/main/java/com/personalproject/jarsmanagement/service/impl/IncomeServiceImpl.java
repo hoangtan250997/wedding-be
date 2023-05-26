@@ -6,6 +6,7 @@ import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
 import com.personalproject.jarsmanagement.service.UserService;
+import com.personalproject.jarsmanagement.service.mapper.IncomeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class IncomeServiceImpl implements IncomeService {
     private final IncomeRepository incomeRepository;
     private final IncomeSourceRepository incomeSourceRepository;
     private final UserService userService;
+    private final IncomeMapper incomeMapper;
 
     @Override
     public Income createIncome(IncomeDTO incomeDTO,int userId) {
@@ -33,7 +35,7 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<Income> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId) {
-        return incomeRepository.findByIncomeSourceIdAndUserId(incomeSourceId,userId);
+    public List<IncomeDTO> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId) {
+        return incomeMapper.mapToDtos(incomeRepository.findByIncomeSourceIdAndUserId(incomeSourceId,userId));
     }
 }

@@ -25,8 +25,8 @@ public class IncomeResources {
     }
 
     @GetMapping
-    public List<Income> findByIncomeSourceIdAndUserId(@PathVariable int userId,@RequestParam int incomeId){
-        return incomeService.findByIncomeSourceIdAndUserId(userId,incomeId);
+    public List<IncomeDTO> findByIncomeSourceIdAndUserId(@RequestParam int incomeSourceId,@PathVariable int userId){
+        return incomeService.findByIncomeSourceIdAndUserId(incomeSourceId,userId);
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/incomesource")
+@RequestMapping("/{userId}/incomesource")
 public class IncomeSourceResources {
     private final IncomeSourceService incomeSourceService;
 
@@ -19,7 +19,7 @@ public class IncomeSourceResources {
         return ResponseEntity.ok(incomeSourceService.findAllIncomeSource());
     }
 
-    @PostMapping("/{userId}")
+    @PostMapping
     ResponseEntity<IncomeSource> createIncomeSource(@RequestParam String name, @PathVariable int userId){
         return ResponseEntity.ok(incomeSourceService.createIncomeSource(name,userId));
     }
