@@ -26,6 +26,10 @@ public class Spending {
     private Purpose purpose;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    @ManyToOne
+    @JoinColumn(name="jar_id")
+    private Jars jars;
 }

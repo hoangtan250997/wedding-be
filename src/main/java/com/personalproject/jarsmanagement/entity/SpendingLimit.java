@@ -22,7 +22,5 @@ public class SpendingLimit {
     @JoinColumn(name="jar_id")
     private Jars jar;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+
 }

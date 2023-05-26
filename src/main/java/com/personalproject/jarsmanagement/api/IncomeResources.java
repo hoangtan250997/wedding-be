@@ -11,28 +11,28 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/{userId}/income")
+@RequestMapping("/{accountId}/income")
 public class IncomeResources {
     private final IncomeService incomeService;
 
     @GetMapping("/incomesourcelist")
-    public List<String>listIncomeSourceByUserId(@PathVariable int userId){
-        return incomeService.listIncomeSourceByUserId(userId);
+    public List<String>listIncomeSourceByAccountId(@PathVariable int accountId){
+        return incomeService.listIncomeSourceByAccountId(accountId);
     }
 
     @PostMapping
-    public Income createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int userId){
-        return incomeService.createIncome(incomeDTO,userId);
+    public Income createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int accountId){
+        return incomeService.createIncome(incomeDTO,accountId);
     }
 
     @GetMapping
-    public List<IncomeDTO> findByIncomeSourceIdAndUserId(@RequestParam int incomeSourceId,@PathVariable int userId){
+    public List<IncomeDTO> findByIncomeSourceIdAndAccountId(@RequestParam int incomeSourceId,@PathVariable int accountId){
 
         //Throw Exception
         if (incomeSourceId <= 0) throw Exception.badRequest("WrongFormat","Income Source Id must greater than 0");
-        if (userId <= 0) throw Exception.badRequest("WrongFormat","User Id must greater than 0");
+        if (accountId <= 0) throw Exception.badRequest("WrongFormat","Account Id must greater than 0");
 
-        return incomeService.findByIncomeSourceIdAndUserId(incomeSourceId,userId);
+        return incomeService.findByIncomeSourceIdAndAccountId(incomeSourceId,accountId);
     }
 
 }

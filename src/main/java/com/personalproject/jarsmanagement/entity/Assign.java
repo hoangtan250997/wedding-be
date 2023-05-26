@@ -21,12 +21,12 @@ public class Assign {
     @CreationTimestamp
     private LocalTime assignedTime;
 
-    @OneToOne
-    @JoinColumn(name="percentage")
-    private JarPercentage jarPercentage;
-
     @ManyToOne
     @JoinColumn(name="jar_id")
     private Jars jars;
+
+    @ManyToOne
+    @JoinColumn(name = "income_id")
+    private Income income;
 
 }

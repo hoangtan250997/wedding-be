@@ -2,6 +2,7 @@ package com.personalproject.jarsmanagement.service.impl;
 
 import com.personalproject.jarsmanagement.entity.Income;
 import com.personalproject.jarsmanagement.entity.IncomeSource;
+import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.repository.UserRepository;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class IncomeSourceServiceImpl implements IncomeSourceService {
     private final IncomeSourceRepository incomeSourceRepository;
     private final IncomeRepository incomeRepository;
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
     @Override
     public IncomeSource findIncomeSourceById(int id) {
@@ -30,7 +31,7 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
     }
 
     @Override
-    public IncomeSource createIncomeSource(String name, int userId) {
+    public IncomeSource createIncomeSource(String name, int accountId) {
 
         List<String> incomeSourceStringList = incomeSourceRepository.findAll().stream()
                 .map(IncomeSource::getName)
@@ -41,7 +42,7 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
 
         if (incomeSourceStringList.contains(name)) {
             income.setIncomeSource(incomeSourceRepository.findByName(name));
-            income.setUser(userRepository.findById(userId).get());
+            income.setAccount(accountRepository.findById(accountId).get());
             incomeRepository.save(income);
         } else {
             IncomeSource incomeSource = new IncomeSource();
@@ -49,7 +50,7 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
             incomeSourceRepository.save(incomeSource);
 
             income.setIncomeSource(incomeSource);
-            income.setUser(userRepository.findById(userId).get());
+            income.setAccount(accountRepository.findById(accountId).get());
             incomeRepository.save(income);
         }
         return incomeSourceRepository.findByName(name);

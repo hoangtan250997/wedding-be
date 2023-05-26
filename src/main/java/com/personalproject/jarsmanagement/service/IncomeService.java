@@ -6,9 +6,9 @@ import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
 import java.util.List;
 
 public interface IncomeService {
-    Income createIncome(IncomeDTO incomeDTO,int userId);
+    Income createIncome(IncomeDTO incomeDTO,int accountId);
 
-    List<String> listIncomeSourceByUserId(int userId);
+    List<String> listIncomeSourceByAccountId(int accountId);
 
-    List<IncomeDTO> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId);
+    List<IncomeDTO> findByIncomeSourceIdAndAccountId(int incomeSourceId, int accountId);
 }

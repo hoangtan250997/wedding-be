@@ -9,7 +9,7 @@ public interface IncomeSourceService {
 
     List<IncomeSource> findAllIncomeSource();
 
-    IncomeSource createIncomeSource(String name, int userId);
+    IncomeSource createIncomeSource(String name, int accountId);
 
 
 }
