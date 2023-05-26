@@ -22,7 +22,7 @@ public class Exception {
         return new ResponseException(messageKey, message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public static ResponseException UsertNotFound() {
+    public static ResponseException UserNotFound() {
         return notFound(USER_NOT_FOUND_MSG_KEY, USER_NOT_FOUND_MSG);
     }
     public static ResponseException EmployeeNotFound() {

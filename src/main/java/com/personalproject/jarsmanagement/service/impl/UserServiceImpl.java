@@ -30,6 +30,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User createUser(UserDTO userDTO) {
+
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -53,6 +54,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         user.setRoles(userRoleAssignmentList);
+
         return userRepository.save(user);
     }
 

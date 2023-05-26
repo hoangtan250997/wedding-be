@@ -1,6 +1,7 @@
 package com.personalproject.jarsmanagement.service.impl;
 
 import com.personalproject.jarsmanagement.entity.Income;
+import com.personalproject.jarsmanagement.exception.Exception;
 import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
@@ -36,6 +37,7 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public List<IncomeDTO> findByIncomeSourceIdAndUserId(int incomeSourceId, int userId) {
+
         return incomeMapper.mapToDtos(incomeRepository.findByIncomeSourceIdAndUserId(incomeSourceId,userId));
     }
 }

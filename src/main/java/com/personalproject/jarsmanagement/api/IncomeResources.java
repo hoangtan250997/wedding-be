@@ -1,6 +1,7 @@
 package com.personalproject.jarsmanagement.api;
 
 import com.personalproject.jarsmanagement.entity.Income;
+import com.personalproject.jarsmanagement.exception.Exception;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,11 @@ public class IncomeResources {
 
     @GetMapping
     public List<IncomeDTO> findByIncomeSourceIdAndUserId(@RequestParam int incomeSourceId,@PathVariable int userId){
+
+        //Throw Exception
+        if (incomeSourceId <= 0) throw Exception.badRequest("WrongFormat","Income Source Id must greater than 0");
+        if (userId <= 0) throw Exception.badRequest("WrongFormat","User Id must greater than 0");
+
         return incomeService.findByIncomeSourceIdAndUserId(incomeSourceId,userId);
     }
 
