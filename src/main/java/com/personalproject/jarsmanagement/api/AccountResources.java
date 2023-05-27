@@ -19,7 +19,8 @@ public class AccountResources {
         return ResponseEntity.ok(accountService.findAllAccount());
     }
     @PostMapping(value = "/signup")
-    ResponseEntity<Account> createAccount(@RequestBody AccountDTO accountDTO) {
+    ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO accountDTO) {
+
         return ResponseEntity.ok(accountService.createAccount(accountDTO));
     }
 

@@ -1,21 +1,19 @@
 package com.personalproject.jarsmanagement.service.mapper;
 
 import com.personalproject.jarsmanagement.entity.Income;
-import com.personalproject.jarsmanagement.entity.User;
+import com.personalproject.jarsmanagement.entity.MoneyJar;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
-import com.personalproject.jarsmanagement.service.DTO.UserDTO;
+import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface IncomeMapper {
-@Mapping(target = "incomeSourceId",source = "incomeSource.id")
-    IncomeDTO mapToDto(Income income);
+public interface MoneyJarMapper {
+@Mapping(target = "accountId",source = "account.id")
+MoneyJarDTO mapToDto(MoneyJar moneyJar);
 
-    List<IncomeDTO> mapToDtos(List<Income> incomes);
+    List<MoneyJarDTO> mapToDtos(List<MoneyJar> moneyJarList);
 
 }

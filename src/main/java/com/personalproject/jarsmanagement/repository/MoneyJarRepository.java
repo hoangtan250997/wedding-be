@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface JarsRepository extends JpaRepository<MoneyJar,Integer> {
+public interface MoneyJarRepository extends JpaRepository<MoneyJar,Integer> {
 }

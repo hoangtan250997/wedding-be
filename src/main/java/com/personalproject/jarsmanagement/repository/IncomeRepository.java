@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 
 public interface IncomeRepository extends JpaRepository<Income, Integer> {
-    @Query("SELECT s.name " +
+    @Query("SELECT DISTINCT s.name " +
             "FROM  Income i, IncomeSource s " +
             "WHERE i.incomeSource.id = s.id " +
             "AND i.account.id = ?1")

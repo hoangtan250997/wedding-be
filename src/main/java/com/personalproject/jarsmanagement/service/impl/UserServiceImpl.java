@@ -38,14 +38,14 @@ public class UserServiceImpl implements UserService {
 
         List<UserRoleAssignment> userRoleAssignmentList = new ArrayList<>();
 
-        if (userDTO.getRole() == null) {
+        if (userDTO.getRoles() == null) {
             UserRoleAssignment userRoleAssignment = new UserRoleAssignment();
             userRoleAssignment.setUsers(user);
             userRoleAssignment.setRole(Role.CHILD);
             userRoleAssignmentList.add(userRoleAssignment);
 
         }   else {
-            for (Role r : userDTO.getRole()
+            for (Role r : userDTO.getRoles()
             ) {
                 UserRoleAssignment userRoleAssignment = new UserRoleAssignment();
                 userRoleAssignment.setUsers(user);

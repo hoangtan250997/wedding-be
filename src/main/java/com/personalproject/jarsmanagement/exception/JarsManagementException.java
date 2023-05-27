@@ -2,13 +2,13 @@ package com.personalproject.jarsmanagement.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class Exception {
+public class JarsManagementException {
 
     private static final String USER_NOT_FOUND_MSG_KEY = "UserNotExisted";
     private static final String USER_NOT_FOUND_MSG = "User Not Found";
 
-    private static final String EMPLOYEE_NOT_FOUND_MSG_KEY = "EmployeeNotExisted";
-    private static final String EMPLOYEE_NOT_FOUND_MSG = "Employee Not Found";
+    private static final String ACCOUNT_NOT_FOUND_MSG_KEY = "AccountNotExisted";
+    private static final String ACCOUNT_NOT_FOUND_MSG = "Account Not Found";
 
     public static ResponseException notFound(String messageKey, String message) {
         return new ResponseException(messageKey, message, HttpStatus.NOT_FOUND);
@@ -25,7 +25,7 @@ public class Exception {
     public static ResponseException UserNotFound() {
         return notFound(USER_NOT_FOUND_MSG_KEY, USER_NOT_FOUND_MSG);
     }
-    public static ResponseException EmployeeNotFound() {
-        return notFound(EMPLOYEE_NOT_FOUND_MSG_KEY, EMPLOYEE_NOT_FOUND_MSG);
+    public static ResponseException AccountNotFound() {
+        return notFound(ACCOUNT_NOT_FOUND_MSG_KEY, ACCOUNT_NOT_FOUND_MSG);
     }
 }

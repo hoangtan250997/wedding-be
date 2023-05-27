@@ -22,7 +22,7 @@ public class Purpose {
 
     @ManyToOne
     @JoinColumn(name = "jar_id")
-    private Jars jar;
+    private MoneyJar jar;
     @CreationTimestamp
     private LocalTime createdTime;
 }

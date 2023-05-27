@@ -20,7 +20,7 @@ public class SpendingLimit {
     private LocalTime existingTime;
     @ManyToOne
     @JoinColumn(name="jar_id")
-    private Jars jar;
+    private MoneyJar jar;
 
 
 }

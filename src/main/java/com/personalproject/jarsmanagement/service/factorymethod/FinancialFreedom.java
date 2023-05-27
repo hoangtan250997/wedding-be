@@ -1,17 +1,18 @@
 package com.personalproject.jarsmanagement.service.factorymethod;
 
-import com.personalproject.jarsmanagement.entity.JarPercentage;
 import com.personalproject.jarsmanagement.entity.JarType;
-import com.personalproject.jarsmanagement.entity.Jars;
+import com.personalproject.jarsmanagement.entity.MoneyJar;
+import lombok.AllArgsConstructor;
 
-public class Necessities implements Jar {
-    private Jars jar;
+public class FinancialFreedom extends AbstractJar {
+    private MoneyJar moneyJar;
 
     @Override
-    public Jars createjar() {
-        jar.setJarType(JarType.NECESSITIES);
-        jar.setBalance((double) 0);
-        jar.setPercentage(0.55);
-        return jar;
+    public MoneyJar createJar() {
+        MoneyJar moneyJar = new MoneyJar();
+        moneyJar.setJarType(JarType.FINANCIAL_FREEDOM);
+        moneyJar.setBalance((double) 0);
+        moneyJar.setPercentage(0.1);
+        return moneyJar;
     }
 }

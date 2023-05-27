@@ -23,7 +23,7 @@ public class Assign {
 
     @ManyToOne
     @JoinColumn(name="jar_id")
-    private Jars jars;
+    private MoneyJar moneyJar;
 
     @ManyToOne
     @JoinColumn(name = "income_id")

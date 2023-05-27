@@ -4,7 +4,6 @@ import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConvert
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.mapping.Join;
 
 import javax.persistence.*;
 
@@ -12,7 +11,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Jars {
+public class MoneyJar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

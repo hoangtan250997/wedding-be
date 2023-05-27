@@ -1,14 +1,11 @@
 package com.personalproject.jarsmanagement.service.factorymethod;
 
-import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConverter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class JarFactory {
-    public static final Jar getJar(int jarNumber) {
+
+public class JarsFactory {
+    public static final AbstractJar getJar(int jarNumber) {
         switch (jarNumber) {
             case 1:
                 return new Necessities();

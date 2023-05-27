@@ -31,5 +31,5 @@ public class Spending {
 
     @ManyToOne
     @JoinColumn(name="jar_id")
-    private Jars jars;
+    private MoneyJar moneyJar;
 }

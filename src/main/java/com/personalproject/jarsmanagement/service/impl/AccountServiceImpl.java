@@ -7,6 +7,7 @@ import com.personalproject.jarsmanagement.service.AccountService;
 import com.personalproject.jarsmanagement.service.DTO.AccountDTO;
 import com.personalproject.jarsmanagement.service.DTO.UserDTO;
 import com.personalproject.jarsmanagement.service.UserService;
+import com.personalproject.jarsmanagement.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     private final UserService userService;
     private final AccountRepository accountRepository;
+
 
 
     @Override
@@ -30,10 +32,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account createAccount(AccountDTO accountDTO) {
+    public AccountDTO createAccount(AccountDTO accountDTO) {
         //UserDTO
         UserDTO userDTO = new UserDTO();
-        userDTO.setRole(accountDTO.getRole());
+        userDTO.setRoles(accountDTO.getRoles());
         userDTO.setPassword(accountDTO.getPassword());
         userDTO.setUsername(accountDTO.getUsername());
         userDTO.setActive(accountDTO.isActive());
@@ -51,7 +53,7 @@ public class AccountServiceImpl implements AccountService {
         account.setFirstName(accountDTO.getFirstName());
 
 
-        return accountRepository.save(account);
+        return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
     }
 
 

@@ -3,11 +3,8 @@ package com.personalproject.jarsmanagement.service.factorymethod;
 import com.personalproject.jarsmanagement.entity.Account;
 import com.personalproject.jarsmanagement.entity.JarType;
 import com.personalproject.jarsmanagement.entity.MoneyJar;
-import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConverter;
-
-import javax.persistence.Convert;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 public abstract class AbstractJar {
     private JarType jarType;
@@ -16,7 +13,7 @@ public abstract class AbstractJar {
 
     private double percentage;
 
-    private int accountId;
-    abstract MoneyJar createJar();
+    private Account account;
+    public abstract MoneyJar createJar();
 
 }
