@@ -3,6 +3,7 @@ package com.personalproject.jarsmanagement.api;
 import com.personalproject.jarsmanagement.entity.MoneyJar;
 import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
+import com.personalproject.jarsmanagement.service.mapper.MoneyJarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,5 +22,10 @@ public class MoneyJarResources {
     ResponseEntity<List<MoneyJarDTO>> createJar(@PathVariable int accountId){
 
     return ResponseEntity.ok(moneyJarService.createJars(accountId));
+}
+
+@GetMapping
+    ResponseEntity<MoneyJarDTO> findByAccountIAndJarType(int accountId, int jarType){
+    return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDto(moneyJarService.findByAccountIAndJarType(accountId,jarType)));
 }
 }

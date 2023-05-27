@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AssignServiceImpl implements AssignService {
-    @Override
-    public Assign createAssign(AssignDTO assignDTO) {
-        return null;
-    }
+
+//    @Override
+//    public Assign createAssign(double amount, int accountId, int incomeSourceId) {
+//
+//
+//        return null;
+//    }
 }

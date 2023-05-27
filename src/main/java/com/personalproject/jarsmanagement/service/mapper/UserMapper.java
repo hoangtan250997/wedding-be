@@ -4,7 +4,6 @@ import com.personalproject.jarsmanagement.entity.Role;
 import com.personalproject.jarsmanagement.entity.User;
 import com.personalproject.jarsmanagement.entity.UserRoleAssignment;
 import com.personalproject.jarsmanagement.service.DTO.UserDTO;
-import jdk.jfr.Name;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 

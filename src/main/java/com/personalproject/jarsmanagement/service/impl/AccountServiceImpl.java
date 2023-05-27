@@ -6,6 +6,7 @@ import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.service.AccountService;
 import com.personalproject.jarsmanagement.service.DTO.AccountDTO;
 import com.personalproject.jarsmanagement.service.DTO.UserDTO;
+import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.UserService;
 import com.personalproject.jarsmanagement.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class AccountServiceImpl implements AccountService {
     private final UserService userService;
     private final AccountRepository accountRepository;
 
+    private final MoneyJarService moneyJarService;
 
 
     @Override
@@ -51,9 +53,11 @@ public class AccountServiceImpl implements AccountService {
         account.setFamily(accountDTO.getFamily());
         account.setLastName(accountDTO.getLastName());
         account.setFirstName(accountDTO.getFirstName());
+        accountRepository.save(account);
 
+        moneyJarService.createJars(account.getId());
 
-        return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
+        return AccountMapper.INSTANCE.mapToDto(account);
     }
 
 

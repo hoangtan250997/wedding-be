@@ -19,4 +19,6 @@ public enum JarType {
         return value;
     }
 
+
+
 }

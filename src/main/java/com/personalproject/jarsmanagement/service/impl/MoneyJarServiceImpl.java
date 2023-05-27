@@ -46,5 +46,10 @@ public class MoneyJarServiceImpl implements MoneyJarService {
         return null;
     }
 
+    @Override
+    public MoneyJar findByAccountIAndJarType(int accountId, int jarType) {
+        return moneyJarRepository.findByAccountIAndJarType(accountId,jarType);
+    }
+
 
 }

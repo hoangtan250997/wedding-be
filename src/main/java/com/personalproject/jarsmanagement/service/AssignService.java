@@ -4,5 +4,7 @@ import com.personalproject.jarsmanagement.entity.Assign;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
 
 public interface AssignService {
-    Assign createAssign(AssignDTO assignDTO);
+//    Assign createAssign(double amount, int accountId, int incomeSourceId);
+
+
 }
