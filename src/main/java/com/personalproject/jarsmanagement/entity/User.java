@@ -12,24 +12,24 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name="users")
+@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 
 public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(unique = true, nullable = false)	
-	private String username;
-	
-	@JsonIgnore
-	private String password;
-	private Boolean active;
 
-	@OneToMany(fetch = FetchType.LAZY,mappedBy = "users",cascade = CascadeType.PERSIST)
-	private List<UserRoleAssignment> roles = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(unique = true, nullable = false)
+    private String username;
+
+    @JsonIgnore
+    private String password;
+    private Boolean active;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
+    private List<UserRoleAssignment> roles = new ArrayList<>();
 
 }

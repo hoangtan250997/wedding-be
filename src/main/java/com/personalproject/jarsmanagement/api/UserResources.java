@@ -17,7 +17,7 @@ import java.util.List;
 public class UserResources {
     private final UserService userService;
 
-
+    //APIs
     @GetMapping
     ResponseEntity<List<UserDTO>> findAll() {
         return ResponseEntity.ok(userService.getUsers());

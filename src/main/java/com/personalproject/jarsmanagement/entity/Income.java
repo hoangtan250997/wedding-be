@@ -21,11 +21,8 @@ public class Income {
     private Double amount;
     @CreationTimestamp
     private LocalDate receivedTime;
-    @OneToOne
-    @JoinColumn(name = "income_source_id")
+    @ManyToOne
+    @JoinColumn(name = "incomeSource_id")
     private IncomeSource incomeSource;
 
-//    @ManyToOne
-//    @JoinColumn(name = "account_id")
-//    private Account account;
 }

@@ -13,13 +13,13 @@ public interface IncomeSourceService {
 
     IncomeSource findIncomeSourceById(int id);
 
-    List<IncomeSourceDTO> findByAccountId(int accountId);
+    List<IncomeSourceDTO> findIncomeSourceByAccountId(int accountId);
 
-    List<IncomeSource> findAllIncomeSource();
+    List<IncomeSourceDTO> findAllIncomeSource();
 
-    IncomeSource createIncomeSource(String name, int accountId);
+    IncomeSourceDTO createIncomeSource(String name, int accountId);
 
-    List<IncomeSource> findByNameAndAccountId(String name, int accountId);
+    List<IncomeSourceDTO> findByIncomeSourceNameAndAccountId(String name, int accountId);
 
     void increaseBalance(int incomeSourceId,double amount);
 

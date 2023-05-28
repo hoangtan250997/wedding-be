@@ -9,8 +9,6 @@ public class IncomeDTO {
 
     private int id;
     private Double amount;
-
     private LocalDate receivedTime;
-
     private int incomeSourceId;
 }

@@ -24,7 +24,7 @@ public class Assign {
     private LocalDate assignedTime;
 
     @ManyToOne
-    @JoinColumn(name="jar_id")
+    @JoinColumn(name="moneyJar_id")
     private MoneyJar moneyJar;
 
     @ManyToOne

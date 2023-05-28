@@ -18,26 +18,28 @@ public class IncomeSourceResources {
     private final IncomeSourceService incomeSourceService;
 
     @GetMapping
-    ResponseEntity<List<IncomeSource>> findAllIncomeSource(){
+    ResponseEntity<List<IncomeSourceDTO>> findAllIncomeSource(){
         return ResponseEntity.ok(incomeSourceService.findAllIncomeSource());
     }
     @GetMapping("/list")
     ResponseEntity<List<IncomeSourceDTO>> findByAccountId(@PathVariable int accountId){
-        return ResponseEntity.ok(incomeSourceService.findByAccountId(accountId));
+        if (accountId <= 0) throw JarsManagementException.badRequest("WrongFormat","Account Id must greater than 0");
+        return ResponseEntity.ok(incomeSourceService.findIncomeSourceByAccountId(accountId));
     }
     @PostMapping
     ResponseEntity<IncomeSourceDTO> createIncomeSource(@RequestParam String name, @PathVariable int accountId){
-        return ResponseEntity.ok(IncomeSourceMapper.INSTANCE.mapToDto(incomeSourceService.createIncomeSource(name,accountId)));
+        if (accountId <= 0) throw JarsManagementException.badRequest("WrongFormat","Account Id must greater than 0");
+        return ResponseEntity.ok(incomeSourceService.createIncomeSource(name,accountId));
     }
 
 
     @GetMapping("/incomeSourceDetail")
-    public List<IncomeSource> findByNameAndAccountId(@RequestParam String name,@PathVariable int accountId){
+    public List<IncomeSourceDTO> findByIncomeSourceNameAndAccountId(@RequestParam String name,@PathVariable int accountId){
 
         //Throw JarsManagementException
         if (accountId <= 0) throw JarsManagementException.badRequest("WrongFormat","Account Id must greater than 0");
 
-        return incomeSourceService.findByNameAndAccountId(name,accountId);
+        return incomeSourceService.findByIncomeSourceNameAndAccountId(name,accountId);
     }
 
 

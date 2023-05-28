@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class IncomeSourceDTO {
-    private Double balance;
+    private int id;
     private String name;
-
+    private Double balance;
     private int accountId;
 
 }

@@ -24,27 +24,39 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //Methods
+    @Override
+    public User findById(int id) { return userRepository.findById(id).get();}
+
+    @Override
+    public User findByUsername(String userName) {
+        return userRepository.findByUsername(userName);
+    }
+
     @Override
     public List<UserDTO> getUsers() {
         return UserMapper.INSTANCE.mapToDtos(userRepository.findAll());
     }
+
     @Override
     public User createUser(UserDTO userDTO) {
 
+        //Create an User without UseRoleAssignments
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setActive(userDTO.isActive());
 
+        //Create UserRoleAssignments
         List<UserRoleAssignment> userRoleAssignmentList = new ArrayList<>();
-
+            //Default Role is CHILD
         if (userDTO.getRoles() == null) {
             UserRoleAssignment userRoleAssignment = new UserRoleAssignment();
             userRoleAssignment.setUsers(user);
             userRoleAssignment.setRole(Role.CHILD);
             userRoleAssignmentList.add(userRoleAssignment);
 
-        }   else {
+        } else {
             for (Role r : userDTO.getRoles()
             ) {
                 UserRoleAssignment userRoleAssignment = new UserRoleAssignment();
@@ -59,15 +71,8 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    @Override
-    public User findById(int id) {
-        return userRepository.findById(id).get();
 
-    }
 
-    @Override
-    public User findByUsername(String userName) {
-        return userRepository.findByUsername(userName);
-    }
+
 
 }

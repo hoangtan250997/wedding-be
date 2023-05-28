@@ -10,16 +10,18 @@ import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.UserService;
 import com.personalproject.jarsmanagement.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-    private final UserService userService;
     private final AccountRepository accountRepository;
 
+    private final UserService userService;
     private final MoneyJarService moneyJarService;
 
 
@@ -29,20 +31,27 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> findAllAccount() {
-        return accountRepository.findAll();
+    public List<AccountDTO> findAllAccount() {
+        return AccountMapper.INSTANCE.mapToDtos(accountRepository.findAll());
     }
 
     @Override
     public AccountDTO createAccount(AccountDTO accountDTO) {
-        //UserDTO
+
+        //UserDTO from accountDTO -> create User
         UserDTO userDTO = new UserDTO();
-        userDTO.setRoles(accountDTO.getRoles());
-        userDTO.setPassword(accountDTO.getPassword());
-        userDTO.setUsername(accountDTO.getUsername());
-        userDTO.setActive(accountDTO.isActive());
+        try {
+            userDTO.setRoles(accountDTO.getRoles());
+            userDTO.setPassword(accountDTO.getPassword());
+            userDTO.setUsername(accountDTO.getUsername());
+            userDTO.setActive(accountDTO.isActive());
+        } catch (Exception e) {
+            log.error("AccountDTO might be incorrect!", e);
+        }
 
         //Create User
+        log.info("Create an user from Account");
+
         User user = userService.createUser(userDTO);
 
         //Create Account
@@ -54,10 +63,10 @@ public class AccountServiceImpl implements AccountService {
         account.setLastName(accountDTO.getLastName());
         account.setFirstName(accountDTO.getFirstName());
 
-
+        //Automatically create 7jars when an account is set up
         moneyJarService.createJars(accountRepository.save(account).getId());
 
-        return AccountMapper.INSTANCE.mapToDto(account);
+        return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
     }
 
 
