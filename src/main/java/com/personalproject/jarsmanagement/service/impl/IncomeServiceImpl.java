@@ -7,6 +7,7 @@ import com.personalproject.jarsmanagement.service.AccountService;
 import com.personalproject.jarsmanagement.service.AssignService;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
+import com.personalproject.jarsmanagement.service.IncomeSourceService;
 import com.personalproject.jarsmanagement.service.mapper.IncomeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,34 +19,32 @@ import java.util.List;
 public class IncomeServiceImpl implements IncomeService {
     private final IncomeRepository incomeRepository;
     private final IncomeSourceRepository incomeSourceRepository;
+    private final IncomeSourceService incomeSourceService;
     private final AccountService accountService;
     private final IncomeMapper incomeMapper;
 
     private final AssignService assignService;
 
     @Override
-    public Income createIncome(IncomeDTO incomeDTO,int accountId) {
+    public Income createIncome(IncomeDTO incomeDTO, int accountId) {
         Income income = new Income();
         income.setAmount(incomeDTO.getAmount());
-        income.setIncomeSource(incomeSourceRepository.findById(incomeDTO.getIncomeSourceId()).get());
-        income.setAccount(accountService.findById(accountId));
+        income.setIncomeSource(incomeSourceRepository.findByNameAndAccountId(incomeDTO.getIncomeSourceName(), accountId).get(0));
 
-        incomeRepository.save(income);
-
-        assignService.createAssign(income.getId());
+        incomeSourceService.increaseBalance(income.getIncomeSource().getId(), income.getAmount());
         return incomeRepository.save(income);
     }
 
-    @Override
-    public List<String> listIncomeSourceByAccountId(int accountId) {
-        return incomeRepository.listIncomeSourceByAccountId(accountId);
-    }
-
-    @Override
-    public List<IncomeDTO> findByIncomeSourceIdAndAccountId(int incomeSourceId, int accountId) {
-
-        return incomeMapper.mapToDtos(incomeRepository.findByIncomeSourceIdAndAccountId(incomeSourceId,accountId));
-    }
+//    @Override
+//    public List<String> listIncomeSourceByAccountId(int accountId) {
+//        return incomeRepository.listIncomeSourceByAccountId(accountId);
+//    }
+//
+//    @Override
+//    public List<IncomeDTO> findByIncomeSourceIdAndAccountId(int incomeSourceId, int accountId) {
+//
+//        return incomeMapper.mapToDtos(incomeRepository.findByIncomeSourceIdAndAccountId(incomeSourceId,accountId));
+//    }
 
     @Override
     public Income findById(int id) {

@@ -7,9 +7,12 @@ import java.util.List;
 
 public interface MoneyJarService {
     List<MoneyJar> createJars(int accountId);
+
     void increaseBalance(AssignDTO assignDTO);
+
     void decreaseBalance(AssignDTO assignDTO);
 
-Double getBalance(int jarType, int accountId);
+    Double getBalance(int jarType, int accountId);
+
     MoneyJar findByAccountIAndJarType(int accountId, int jarType);
 }

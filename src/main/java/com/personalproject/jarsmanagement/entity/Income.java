@@ -25,7 +25,7 @@ public class Income {
     @JoinColumn(name = "income_source_id")
     private IncomeSource incomeSource;
 
-    @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+//    @ManyToOne
+//    @JoinColumn(name = "account_id")
+//    private Account account;
 }

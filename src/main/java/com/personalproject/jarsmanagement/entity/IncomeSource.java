@@ -18,9 +18,9 @@ public class IncomeSource {
 
     private String name;
 
-//    private double balance;
-//    @ManyToOne
-//    private Account account;
+    private double balance;
+    @ManyToOne
+    private Account account;
 
 
 

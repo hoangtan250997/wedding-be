@@ -6,7 +6,9 @@ import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.repository.UserRepository;
+import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDTO;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
+import com.personalproject.jarsmanagement.service.mapper.IncomeSourceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +19,17 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class IncomeSourceServiceImpl implements IncomeSourceService {
     private final IncomeSourceRepository incomeSourceRepository;
-    private final IncomeRepository incomeRepository;
     private final AccountRepository accountRepository;
 
     @Override
     public IncomeSource findIncomeSourceById(int id) {
         return incomeSourceRepository.findById(id).get();
+    }
+
+    @Override
+    public List<IncomeSourceDTO> findByAccountId(int accountId) {
+
+        return IncomeSourceMapper.INSTANCE.mapToDtos( incomeSourceRepository.findByAccount(accountRepository.findById(accountId).get()));
     }
 
     @Override
@@ -37,23 +44,32 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
                 .map(IncomeSource::getName)
                 .collect(Collectors.toList());
 
-        Income income = new Income();
-        income.setAmount((double) 0);
+        IncomeSource incomeSource = new IncomeSource();
+        incomeSource.setName(name);
+        incomeSource.setBalance(0);
+        incomeSource.setAccount(accountRepository.findById(accountId).get());
+        incomeSourceRepository.save(incomeSource);
 
-        if (incomeSourceStringList.contains(name)) {
-            income.setIncomeSource(incomeSourceRepository.findByName(name));
-//            income.setAccount(accountRepository.findById(accountId).get());
-            incomeRepository.save(income);
-        } else {
-            IncomeSource incomeSource = new IncomeSource();
-            incomeSource.setName(name);
-            incomeSourceRepository.save(incomeSource);
+        return incomeSourceRepository.save(incomeSource);
+    }
 
-            income.setIncomeSource(incomeSource);
-//            income.setAccount(accountRepository.findById(accountId).get());
-            incomeRepository.save(income);
-        }
-        return incomeSourceRepository.findByName(name);
+    @Override
+    public List<IncomeSource> findByNameAndAccountId(String name, int accountId) {
+        return incomeSourceRepository.findByNameAndAccountId(name, accountId);
+    }
+
+    @Override
+    public void increaseBalance(int incomeSourceId, double amount) {
+        IncomeSource incomeSource = incomeSourceRepository.findById(incomeSourceId).get();
+        incomeSource.setBalance(incomeSource.getBalance() + amount);
+        incomeSourceRepository.save(incomeSource);
+    }
+
+    @Override
+    public void decreaseBalance(int incomeSourceId, double amount) {
+        IncomeSource incomeSource = incomeSourceRepository.findById(incomeSourceId).get();
+        incomeSource.setBalance(incomeSource.getBalance() - amount);
+        incomeSourceRepository.save(incomeSource);
     }
 
 }
