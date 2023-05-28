@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface MoneyJarService {
-    List<MoneyJarDTO> createJars(int accountId);
+    List<MoneyJar> createJars(int accountId);
     MoneyJarDTO updateJar(int accountId,double amount);
 
 

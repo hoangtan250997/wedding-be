@@ -4,6 +4,7 @@ import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConvert
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -21,6 +22,7 @@ public class MoneyJar {
     private Double balance;
 
     private double percentage;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;

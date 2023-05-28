@@ -8,6 +8,7 @@ import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.factorymethod.AbstractJar;
 import com.personalproject.jarsmanagement.service.factorymethod.JarsFactory;
+import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConverter;
 import com.personalproject.jarsmanagement.service.mapper.MoneyJarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,35 +22,39 @@ public class MoneyJarServiceImpl implements MoneyJarService {
 
     final private AccountRepository accountRepository;
     final private MoneyJarRepository moneyJarRepository;
-    final private MoneyJarMapper moneyJarMapper;
+    private MoneyJarMapper moneyJarMapper;
+
+    private JarTypeAttributeConverter jarTypeAttributeConverter;
 
     @Override
-    public List<MoneyJarDTO> createJars(int accountId) {
+    public List<MoneyJar> createJars(int accountId) {
+
         List<MoneyJar> jars = new ArrayList<>();
+        System.out.println(accountId);
 
         for (int i = 0; i < 7; i++) {
             AbstractJar jar = JarsFactory.getJar(i+1);
             MoneyJar moneyJar = jar.createJar();
             moneyJar.setAccount(accountRepository.findById(accountId).orElseThrow(JarsManagementException::AccountNotFound));
             moneyJarRepository.save(moneyJar);
-            jars.add(moneyJar);
+            jars.add(moneyJarRepository.save(moneyJar));
 
         }
-        return moneyJarMapper.mapToDtos(jars);
-    }
-
-    @Override
-    public MoneyJarDTO updateJar(int accountId, double amount) {
-        for (int i = 0; i < 7; i++) {
-
+            return jars;
         }
-        return null;
+
+        @Override
+        public MoneyJarDTO updateJar ( int accountId, double amount){
+            for (int i = 0; i < 7; i++) {
+
+            }
+            return null;
+        }
+
+        @Override
+        public MoneyJar findByAccountIAndJarType ( int accountId, int jarType){
+            return moneyJarRepository.findByAccountIAndJarType(accountId, jarTypeAttributeConverter.convertToEntityAttribute(jarType));
+        }
+
+
     }
-
-    @Override
-    public MoneyJar findByAccountIAndJarType(int accountId, int jarType) {
-        return moneyJarRepository.findByAccountIAndJarType(accountId,jarType);
-    }
-
-
-}

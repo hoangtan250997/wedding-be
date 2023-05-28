@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
         userDTO.setActive(accountDTO.isActive());
 
         //Create User
-        User user=  userService.createUser(userDTO);
+        User user = userService.createUser(userDTO);
 
         //Create Account
         Account account = new Account();
@@ -53,9 +53,9 @@ public class AccountServiceImpl implements AccountService {
         account.setFamily(accountDTO.getFamily());
         account.setLastName(accountDTO.getLastName());
         account.setFirstName(accountDTO.getFirstName());
-        accountRepository.save(account);
 
-        moneyJarService.createJars(account.getId());
+
+        moneyJarService.createJars(accountRepository.save(account).getId());
 
         return AccountMapper.INSTANCE.mapToDto(account);
     }

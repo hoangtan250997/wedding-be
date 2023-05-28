@@ -6,10 +6,7 @@ import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.mapper.MoneyJarMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +18,12 @@ public class MoneyJarResources {
 @GetMapping
     ResponseEntity<List<MoneyJarDTO>> createJar(@PathVariable int accountId){
 
-    return ResponseEntity.ok(moneyJarService.createJars(accountId));
+    return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDtos(moneyJarService.createJars(accountId)));
 }
 
-@GetMapping
-    ResponseEntity<MoneyJarDTO> findByAccountIAndJarType(int accountId, int jarType){
+@GetMapping("/ok")
+    ResponseEntity<MoneyJarDTO> findByAccountIAndJarType(@PathVariable int accountId,@RequestParam int jarType){
     return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDto(moneyJarService.findByAccountIAndJarType(accountId,jarType)));
+//    return ResponseEntity.ok(moneyJarService.findByAccountIAndJarType(accountId,jarType));
 }
 }
