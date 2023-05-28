@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -17,10 +19,10 @@ public class SpendingLimit {
     private Integer id;
 
     private Double amount;
-    private LocalTime existingTime;
+    private LocalDate existingTime;
     @ManyToOne
-    @JoinColumn(name="jar_id")
-    private MoneyJar jar;
+    @JoinColumn(name="moneyJar_id")
+    private MoneyJar moneyjar;
 
 
 }

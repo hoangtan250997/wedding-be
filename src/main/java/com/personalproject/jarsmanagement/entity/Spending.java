@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -18,18 +20,19 @@ public class Spending {
     private Integer id;
 
     private Double amount;
-    @CreationTimestamp
-    private LocalTime spendingTime;
+    //    @CreationTimestamp
+    //Cho trường hợp là nếu người dùng quên nhận thì ngày khác có thể nhập"
+    private LocalDate spendingTime;
 
-    @ManyToOne
-    @JoinColumn(name = "purpose")
-    private Purpose purpose;
+    //    @ManyToOne
+//    @JoinColumn(name = "purpose")
+    private String purpose;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name="jar_id")
+    @JoinColumn(name = "moneyJar_id")
     private MoneyJar moneyJar;
 }

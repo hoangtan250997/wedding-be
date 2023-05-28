@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -18,7 +20,7 @@ public class Income {
     private Integer id;
     private Double amount;
     @CreationTimestamp
-    private LocalDateTime receivedTime;
+    private LocalDate receivedTime;
     @OneToOne
     @JoinColumn(name = "income_source_id")
     private IncomeSource incomeSource;

@@ -6,9 +6,7 @@ import com.personalproject.jarsmanagement.repository.AssignRepository;
 import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.service.AssignService;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
-import com.personalproject.jarsmanagement.service.IncomeService;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +25,6 @@ final private IncomeRepository incomeRepository;
 
         Income income = incomeRepository.findById(incomeId).get();
 
-
         Double amount = income.getAmount();
 
         for (int i = 0; i < 6; i++) {
@@ -36,6 +33,13 @@ final private IncomeRepository incomeRepository;
             assign.setIncome(income);
             assign.setMoneyJar(moneyJarService.findByAccountIAndJarType(income.getAccount().getId(),i+1));
             assignList.add(assignRepository.save(assign));
+
+            //Create AssignDTO for update MoneyJar
+            AssignDTO assignDTO = new AssignDTO();
+            assignDTO.setAmount(assign.getAmount());
+            assignDTO.setAccountId(assign.getIncome().getAccount().getId());
+            assignDTO.setMoneyJarId(assign.getMoneyJar().getId());
+            moneyJarService.increaseBalance(assignDTO);
         }
         return assignList;
     }

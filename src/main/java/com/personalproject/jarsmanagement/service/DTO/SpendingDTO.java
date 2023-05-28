@@ -1,5 +1,7 @@
-package com.personalproject.jarsmanagement.entity;
+package com.personalproject.jarsmanagement.service.DTO;
 
+import com.personalproject.jarsmanagement.entity.Account;
+import com.personalproject.jarsmanagement.entity.MoneyJar;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,25 +12,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Assign {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class SpendingDTO {
+
     private Integer id;
 
     private Double amount;
-    @CreationTimestamp
-    private LocalDate assignedTime;
+    private LocalDate spendingTime;
 
-    @ManyToOne
-    @JoinColumn(name="jar_id")
-    private MoneyJar moneyJar;
+    private String purpose;
 
-    @ManyToOne
-    @JoinColumn(name = "income_id")
-    private Income income;
 
+    private int accountId;
+
+    private int moneyJarId;
 }

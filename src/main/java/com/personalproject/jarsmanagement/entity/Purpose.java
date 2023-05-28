@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
@@ -20,9 +21,9 @@ public class Purpose {
     @Column(unique = true)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "jar_id")
-    private MoneyJar jar;
+//    @ManyToOne
+//    @JoinColumn(name = "jar_id")
+//    private MoneyJar jar;
     @CreationTimestamp
-    private LocalTime createdTime;
+    private LocalDate createdTime;
 }

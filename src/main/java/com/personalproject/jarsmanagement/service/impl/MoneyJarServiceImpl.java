@@ -4,7 +4,7 @@ import com.personalproject.jarsmanagement.entity.MoneyJar;
 import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.repository.MoneyJarRepository;
-import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
+import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.factorymethod.AbstractJar;
 import com.personalproject.jarsmanagement.service.factorymethod.JarsFactory;
@@ -21,6 +21,7 @@ public class MoneyJarServiceImpl implements MoneyJarService {
 
     final private AccountRepository accountRepository;
     final private MoneyJarRepository moneyJarRepository;
+
     private JarTypeAttributeConverter jarTypeAttributeConverter = new JarTypeAttributeConverter();
 
     @Override
@@ -41,11 +42,18 @@ public class MoneyJarServiceImpl implements MoneyJarService {
     }
 
     @Override
-    public MoneyJarDTO updateJar(int accountId, double amount) {
-        for (int i = 0; i < 7; i++) {
+    public void increaseBalance(AssignDTO assignDTO) {
+        MoneyJar moneyJar = findByAccountIAndJarType(assignDTO.getAccountId(), assignDTO.getMoneyJarId());
+        moneyJar.setBalance(moneyJar.getBalance() + assignDTO.getAmount());
+        moneyJarRepository.save(moneyJar);
 
-        }
-        return null;
+    }
+    @Override
+    public void decreaseBalance(AssignDTO assignDTO) {
+        MoneyJar moneyJar = findByAccountIAndJarType(assignDTO.getAccountId(), assignDTO.getMoneyJarId());
+        moneyJar.setBalance(moneyJar.getBalance() - assignDTO.getAmount());
+        moneyJarRepository.save(moneyJar);
+
     }
 
     @Override

@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 
 public interface PurposeRepository extends JpaRepository<Purpose,Integer> {
+    Purpose findByName(String name);
 }
