@@ -48,12 +48,18 @@ public class MoneyJarServiceImpl implements MoneyJarService {
         moneyJarRepository.save(moneyJar);
 
     }
+
     @Override
     public void decreaseBalance(AssignDTO assignDTO) {
         MoneyJar moneyJar = findByAccountIAndJarType(assignDTO.getAccountId(), assignDTO.getMoneyJarId());
         moneyJar.setBalance(moneyJar.getBalance() - assignDTO.getAmount());
         moneyJarRepository.save(moneyJar);
 
+    }
+
+    @Override
+    public Double getBalance(int jarType, int accountId) {
+        return findByAccountIAndJarType(jarType, accountId).getBalance();
     }
 
     @Override
