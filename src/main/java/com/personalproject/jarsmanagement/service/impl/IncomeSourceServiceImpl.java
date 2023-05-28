@@ -7,11 +7,13 @@ import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.repository.UserRepository;
 import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDTO;
+import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDetailDTO;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
 import com.personalproject.jarsmanagement.service.mapper.IncomeSourceMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +22,12 @@ import java.util.stream.Collectors;
 public class IncomeSourceServiceImpl implements IncomeSourceService {
     private final IncomeSourceRepository incomeSourceRepository;
     private final AccountRepository accountRepository;
+
+//    @Override
+//    public List<IncomeSourceDetailDTO> listIncomeSourceBetweenTwoDay(LocalDate start, LocalDate end) {
+//List<>
+//        return null;
+//    }
 
     @Override
     public IncomeSource findIncomeSourceById(int id) {

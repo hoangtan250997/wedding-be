@@ -5,6 +5,7 @@ import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.service.AccountService;
 import com.personalproject.jarsmanagement.service.AssignService;
+import com.personalproject.jarsmanagement.service.DTO.Cau2;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
@@ -36,14 +37,19 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public Double totalIncomeBetweenTwoDay(LocalDate start, LocalDate end) {
-        Double total = findByReceivedTimeBetween(start,end).stream().mapToDouble(IncomeDTO::getAmount).sum();
+        Double total = findByReceivedTimeBetween(start,end).stream().mapToDouble(Income::getAmount).sum();
         return total;
 
     }
 
     @Override
-    public List<IncomeDTO> findByReceivedTimeBetween(LocalDate start, LocalDate end) {
-        return IncomeMapper.INSTANCE.mapToDtos(incomeRepository.findByReceivedTimeBetween(start,end));
+    public List<Income> findByReceivedTimeBetween(LocalDate start, LocalDate end) {
+        return incomeRepository.findByReceivedTimeBetween(start,end);
+    }
+
+    @Override
+    public List<Cau2> cau2(LocalDate start, LocalDate end) {
+        return incomeRepository.cau2(start,end);
     }
 
 //    @Override
