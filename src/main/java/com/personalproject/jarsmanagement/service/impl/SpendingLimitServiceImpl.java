@@ -24,7 +24,7 @@ public class SpendingLimitServiceImpl implements SpendingLimitService {
 
         SpendingLimit spendingLimit = new SpendingLimit();
 
-        spendingLimit.setMoneyjar(moneyJar);
+        spendingLimit.setMoneyJar(moneyJar);
         spendingLimit.setExpirationDate(spendingLimitDTO.getExpirationDate());
         spendingLimit.setAmount(spendingLimitDTO.getAmount());
 

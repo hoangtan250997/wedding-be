@@ -42,7 +42,7 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
 
         if (incomeSourceStringList.contains(name)) {
             income.setIncomeSource(incomeSourceRepository.findByName(name));
-            income.setAccount(accountRepository.findById(accountId).get());
+//            income.setAccount(accountRepository.findById(accountId).get());
             incomeRepository.save(income);
         } else {
             IncomeSource incomeSource = new IncomeSource();
@@ -50,7 +50,7 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
             incomeSourceRepository.save(incomeSource);
 
             income.setIncomeSource(incomeSource);
-            income.setAccount(accountRepository.findById(accountId).get());
+//            income.setAccount(accountRepository.findById(accountId).get());
             incomeRepository.save(income);
         }
         return incomeSourceRepository.findByName(name);

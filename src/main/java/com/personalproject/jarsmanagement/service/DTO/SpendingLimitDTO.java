@@ -16,6 +16,7 @@ public class SpendingLimitDTO {
 
     private Integer id;
     private Double amount;
+    private LocalDate createdDate;
     private LocalDate expirationDate;
 
     private int moneyJarId;
