@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/{accountId}/moneyjar")
+@RequestMapping("/{accountId}/moneyJar")
 public class MoneyJarResources {
     private final MoneyJarService moneyJarService;
 @GetMapping
@@ -21,7 +21,7 @@ public class MoneyJarResources {
     return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDtos(moneyJarService.createJars(accountId)));
 }
 
-@GetMapping("/ok")
+@GetMapping("/specifiedJar")
     ResponseEntity<MoneyJarDTO> findByAccountIAndJarType(@PathVariable int accountId,@RequestParam int jarType){
     return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDto(moneyJarService.findByAccountIAndJarType(accountId,jarType)));
 //    return ResponseEntity.ok(moneyJarService.findByAccountIAndJarType(accountId,jarType));
