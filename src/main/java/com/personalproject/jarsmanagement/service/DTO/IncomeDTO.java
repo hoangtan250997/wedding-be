@@ -4,7 +4,10 @@ import lombok.Data;
 
 @Data
 public class IncomeDTO {
-    private Double amount;
-    private String incomeSourceName;
 
+    private int id;
+    private Double amount;
+//    private String incomeSourceName;
+
+    private int incomeSourceId;
 }

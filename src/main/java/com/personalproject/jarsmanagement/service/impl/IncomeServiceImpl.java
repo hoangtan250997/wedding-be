@@ -12,6 +12,7 @@ import com.personalproject.jarsmanagement.service.mapper.IncomeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,19 +21,29 @@ public class IncomeServiceImpl implements IncomeService {
     private final IncomeRepository incomeRepository;
     private final IncomeSourceRepository incomeSourceRepository;
     private final IncomeSourceService incomeSourceService;
-    private final AccountService accountService;
-    private final IncomeMapper incomeMapper;
 
-    private final AssignService assignService;
+
 
     @Override
     public Income createIncome(IncomeDTO incomeDTO, int accountId) {
         Income income = new Income();
         income.setAmount(incomeDTO.getAmount());
-        income.setIncomeSource(incomeSourceRepository.findByNameAndAccountId(incomeDTO.getIncomeSourceName(), accountId).get(0));
+        income.setIncomeSource(incomeSourceRepository.findById(incomeDTO.getIncomeSourceId()).get());
 
         incomeSourceService.increaseBalance(income.getIncomeSource().getId(), income.getAmount());
         return incomeRepository.save(income);
+    }
+
+    @Override
+    public Double totalIncomeBetweenTwoDay(LocalDate start, LocalDate end) {
+        Double total = findByReceivedTimeBetween(start,end).stream().mapToDouble(IncomeDTO::getAmount).sum();
+        return total;
+
+    }
+
+    @Override
+    public List<IncomeDTO> findByReceivedTimeBetween(LocalDate start, LocalDate end) {
+        return IncomeMapper.INSTANCE.mapToDtos(incomeRepository.findByReceivedTimeBetween(start,end));
     }
 
 //    @Override

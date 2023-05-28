@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -21,5 +22,8 @@ public interface IncomeRepository extends JpaRepository<Income, Integer> {
 //            "WHERE i.incomeSource.id = ?1 " +
 //            "AND i.account.id = ?2 ")
 //    List<Income> findByIncomeSourceIdAndAccountId(int incomeSourceId, int accountId);
+
+
+    List<Income> findByReceivedTimeBetween(LocalDate start, LocalDate end);
 
 }

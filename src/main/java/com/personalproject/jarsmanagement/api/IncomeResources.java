@@ -5,8 +5,11 @@ import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,14 +18,22 @@ import java.util.List;
 public class IncomeResources {
     private final IncomeService incomeService;
 
+    @GetMapping("/periodDate")
+    public ResponseEntity<List<IncomeDTO>> findByReceivedTimeBetween(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.findByReceivedTimeBetween(start,end));
+    }
+    @GetMapping("/periodDateTotal")
+    public ResponseEntity<Double> totalIncomeBetweenTwoDay(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.totalIncomeBetweenTwoDay(start,end));
+    }
 //    @GetMapping("/incomesourcelist")
 //    public List<String>listIncomeSourceByAccountId(@PathVariable int accountId){
 //        return incomeService.listIncomeSourceByAccountId(accountId);
 //    }
 
     @PostMapping
-    public Income createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int accountId){
-        return incomeService.createIncome(incomeDTO,accountId);
+    public ResponseEntity<Income> createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int accountId){
+        return ResponseEntity.ok(incomeService.createIncome(incomeDTO,accountId));
     }
 
 //    @GetMapping

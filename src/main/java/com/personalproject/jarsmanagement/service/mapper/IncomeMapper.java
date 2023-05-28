@@ -9,11 +9,15 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IncomeMapper {
-@Mapping(target = "incomeSourceId",source = "incomeSource.id")
+    IncomeMapper INSTANCE = Mappers.getMapper(IncomeMapper.class);
+
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "incomeSourceId", source = "incomeSource.id")
     IncomeDTO mapToDto(Income income);
 
     List<IncomeDTO> mapToDtos(List<Income> incomes);
