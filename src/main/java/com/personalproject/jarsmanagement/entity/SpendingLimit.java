@@ -19,10 +19,10 @@ public class SpendingLimit {
     private Integer id;
 
     private Double amount;
-    private LocalDate existingTime;
+    private LocalDate expirationDate;
     @ManyToOne
     @JoinColumn(name="moneyJar_id")
-    private MoneyJar moneyjar;
+    private MoneyJar moneyJar;
 
 
 }
