@@ -6,10 +6,12 @@ import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.repository.MoneyJarRepository;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
+import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.factorymethod.AbstractJar;
 import com.personalproject.jarsmanagement.service.factorymethod.JarsFactory;
 import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConverter;
+import com.personalproject.jarsmanagement.service.mapper.MoneyJarMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,12 @@ public class MoneyJarServiceImpl implements MoneyJarService {
         log.info("FIND BY ACCOUNT ID AND JAR TYPE / MONEY JAR");
         return moneyJarRepository.findByAccountIdAndJarType(accountId, jarTypeAttributeConverter.convertToEntityAttribute(jarType));
 
+    }
+
+    @Override
+    public List<MoneyJarDTO> findByAccountId(int accountId) {
+        List<MoneyJar> moneyJarList = moneyJarRepository.findByAccount(accountRepository.findById(accountId).orElseThrow(JarsManagementException::AccountNotFound));
+        return MoneyJarMapper.INSTANCE.mapToDtos(moneyJarList);
     }
 
     @Override

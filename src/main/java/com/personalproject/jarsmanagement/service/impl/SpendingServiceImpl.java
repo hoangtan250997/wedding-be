@@ -5,6 +5,7 @@ import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.repository.MoneyJarRepository;
 import com.personalproject.jarsmanagement.repository.SpendingRepository;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
+import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
 import com.personalproject.jarsmanagement.service.DTO.SpendingDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.SpendingService;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -55,5 +58,17 @@ public class SpendingServiceImpl implements SpendingService {
         moneyJarService.decreaseBalance(assignDTO);
 
         return SpendingMapper.INSTANCE.mapToDto(spendingRepository.save(spending));
+    }
+
+    @Override
+    public List<JarDTO> listJarsBetweenTwoDays(LocalDate start, LocalDate end) {
+        return spendingRepository.listJarsBetweenTwoDays(start,end);
+    }
+
+    @Override
+    public List<JarDTO> listJarsByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId, int topNumber) {
+        return spendingRepository.listJarsByAccountIdBetweenTwoDays(start,end,accountId).stream()
+                .limit(topNumber)
+                .collect(Collectors.toList());
     }
 }

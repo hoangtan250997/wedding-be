@@ -1,5 +1,6 @@
 package com.personalproject.jarsmanagement.repository;
 
+import com.personalproject.jarsmanagement.entity.Account;
 import com.personalproject.jarsmanagement.entity.JarType;
 import com.personalproject.jarsmanagement.entity.MoneyJar;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,5 +15,5 @@ public interface MoneyJarRepository extends JpaRepository<MoneyJar,Integer> {
 
     MoneyJar findByAccountIdAndJarType(int accountId, JarType jarType);
 
-    List<MoneyJar> findByAccountId(int accountId);
+    List<MoneyJar> findByAccount(Account account);
 }

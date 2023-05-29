@@ -2,6 +2,7 @@ package com.personalproject.jarsmanagement.service;
 
 import com.personalproject.jarsmanagement.entity.MoneyJar;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
+import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface MoneyJarService {
     Double showBalance(int jarType, int accountId);
 
     MoneyJar findByAccountIdAndJarType(int accountId, int jarType);
+
+    List<MoneyJarDTO> findByAccountId(int accountId);
 }

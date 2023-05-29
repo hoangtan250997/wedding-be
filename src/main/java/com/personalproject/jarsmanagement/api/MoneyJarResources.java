@@ -25,8 +25,13 @@ public class MoneyJarResources {
         return ResponseEntity.ok(moneyJarService.showBalance(jarType, accountId));
     }
 
+//    @PostMapping
+//    ResponseEntity<List<MoneyJarDTO>> createJar(@PathVariable int accountId) {
+//        return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDtos(moneyJarService.createJars(accountId)));
+//    }
+
     @GetMapping
-    ResponseEntity<List<MoneyJarDTO>> createJar(@PathVariable int accountId) {
-        return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDtos(moneyJarService.createJars(accountId)));
+    ResponseEntity<List<MoneyJarDTO>> findByAccountId(@PathVariable int accountId) {
+        return ResponseEntity.ok(moneyJarService.findByAccountId(accountId));
     }
 }

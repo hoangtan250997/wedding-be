@@ -15,7 +15,7 @@ public interface MoneyJarMapper {
     MoneyJarMapper INSTANCE = Mappers.getMapper(MoneyJarMapper.class);
 
 
-    //    @Mapping(target = "jarType", source = "moneyJar.jarType")
+    @Mapping(target = "jarType", source = "moneyJar.jarType")
     @Mapping(target = "accountId", source = "account.id")
     MoneyJarDTO mapToDto(MoneyJar moneyJar);
 
