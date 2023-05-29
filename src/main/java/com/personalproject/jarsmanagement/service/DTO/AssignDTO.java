@@ -6,11 +6,11 @@ import java.time.LocalDate;
 
 @Data
 public class AssignDTO {
-    private Double amount;
+    private int id;
+    private double amount;
     private LocalDate assignedTime;
     private int accountId;
     private int incomeSourceId;
-
-    private int MoneyJarId;
+    private int moneyJarId;
 
 }

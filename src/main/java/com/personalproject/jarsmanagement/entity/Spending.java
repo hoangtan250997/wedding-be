@@ -21,11 +21,8 @@ public class Spending {
 
     private Double amount;
     //    @CreationTimestamp
-    //Cho trường hợp là nếu người dùng quên nhận thì ngày khác có thể nhập"
+    //    Cho trường hợp là nếu người dùng quên nhập thì ngày khác có thể nhập"
     private LocalDate spendingTime;
-
-    //    @ManyToOne
-//    @JoinColumn(name = "purpose")
     private String purpose;
 
     @ManyToOne

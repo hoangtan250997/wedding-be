@@ -29,10 +29,10 @@ public class AssignServiceImpl implements AssignService {
     final private IncomeSourceRepository incomeSourceRepository;
 
     @Override
-    public List<AssignDTO> createAssign(int incomeSouceId, double amount) {
+    public List<AssignDTO> createAssign(int incomeSourceId, double amount) {
         List<Assign> assignList = new ArrayList<>();
 
-        IncomeSource incomeSource = incomeSourceRepository.findById(incomeSouceId).orElseThrow(JarsManagementException::IncomeSourceNotFound);
+        IncomeSource incomeSource = incomeSourceRepository.findById(incomeSourceId).orElseThrow(JarsManagementException::IncomeSourceNotFound);
 
         for (int i = 0; i < 6; i++) {
             Assign assign = new Assign();
@@ -52,7 +52,7 @@ public class AssignServiceImpl implements AssignService {
         }
 
         //Automatically decrease Balance for income Source
-        incomeSourceService.decreaseBalance(incomeSouceId, amount);
+        incomeSourceService.decreaseBalance(incomeSourceId, amount);
         return AssignMapper.INSTANCE.mapToDtos(assignList);
     }
 }

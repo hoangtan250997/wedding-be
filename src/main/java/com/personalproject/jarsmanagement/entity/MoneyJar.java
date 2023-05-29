@@ -15,11 +15,11 @@ import javax.persistence.*;
 public class MoneyJar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
     @Convert(converter = JarTypeAttributeConverter.class)
     private JarType jarType;
 
-    private Double balance;
+    private double balance;
 
     private double percentage;
     @JsonIgnore

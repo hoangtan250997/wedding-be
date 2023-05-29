@@ -18,14 +18,9 @@ import java.time.LocalTime;
 public class SpendingDTO {
 
     private Integer id;
-
     private Double amount;
     private LocalDate spendingTime;
-
     private String purpose;
-
-
     private int accountId;
-
     private int moneyJarId;
 }

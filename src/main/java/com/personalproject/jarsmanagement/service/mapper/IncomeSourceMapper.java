@@ -14,8 +14,8 @@ import java.util.List;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface IncomeSourceMapper {
     IncomeSourceMapper INSTANCE = Mappers.getMapper(IncomeSourceMapper.class);
-
-@Mapping(target = "accountId",source = "account.id")
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "accountId", source = "account.id")
     IncomeSourceDTO mapToDto(IncomeSource incomeSource);
 
     List<IncomeSourceDTO> mapToDtos(List<IncomeSource> incomeSourceList);

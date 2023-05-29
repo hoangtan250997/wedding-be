@@ -18,7 +18,7 @@ public class SpendingResources {
     private final SpendingService spendingService;
 
     @PostMapping
-    public ResponseEntity<Spending> createSpending(@RequestBody SpendingDTO spendingDTO){
+    public ResponseEntity<SpendingDTO> createSpending(@RequestBody SpendingDTO spendingDTO){
         return ResponseEntity.ok(spendingService.createSpending(spendingDTO));
     }
 

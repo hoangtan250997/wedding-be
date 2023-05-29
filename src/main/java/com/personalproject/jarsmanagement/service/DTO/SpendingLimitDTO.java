@@ -14,11 +14,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class SpendingLimitDTO {
 
-    private Integer id;
-    private Double amount;
+    private int id;
+    private double amount;
     private LocalDate createdDate;
     private LocalDate expirationDate;
-
     private int moneyJarId;
 
 

@@ -4,5 +4,5 @@ import com.personalproject.jarsmanagement.entity.Spending;
 import com.personalproject.jarsmanagement.service.DTO.SpendingDTO;
 
 public interface SpendingService {
-    Spending createSpending(SpendingDTO spendingDTO);
+    SpendingDTO createSpending(SpendingDTO spendingDTO);
 }

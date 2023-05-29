@@ -6,6 +6,6 @@ import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
 import java.util.List;
 
 public interface AssignService {
-    List<AssignDTO> createAssign(int incomeSouceId, double amount);
+    List<AssignDTO> createAssign(int incomeSourceId, double amount);
 
 }

@@ -12,5 +12,5 @@ public interface MoneyJarRepository extends JpaRepository<MoneyJar,Integer> {
     @Query("SELECT m " +
             "FROM MoneyJar m " +
             "WHERE m.account.id = ?1 AND m.jarType = ?2")
-    MoneyJar findByAccountIAndJarType(int accountId, JarType jarType);
+    MoneyJar findByAccountIdAndJarType(int accountId, JarType jarType);
 }
