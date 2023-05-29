@@ -8,5 +8,7 @@ public class IncomeSourceDTO {
     private String name;
     private Double balance;
     private int accountId;
+    private String accountName;
+
 
 }

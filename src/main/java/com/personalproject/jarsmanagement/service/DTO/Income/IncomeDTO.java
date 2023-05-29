@@ -1,4 +1,4 @@
-package com.personalproject.jarsmanagement.service.DTO;
+package com.personalproject.jarsmanagement.service.DTO.Income;
 
 import lombok.Data;
 

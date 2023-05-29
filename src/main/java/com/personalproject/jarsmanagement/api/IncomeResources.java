@@ -1,11 +1,11 @@
 package com.personalproject.jarsmanagement.api;
 
-import com.personalproject.jarsmanagement.entity.Income;
 import com.personalproject.jarsmanagement.exception.JarsManagementException;
-import com.personalproject.jarsmanagement.service.DTO.Cau2;
-import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IdAmountIncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.idAmountNameIncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IncomeDetailsDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
-import com.personalproject.jarsmanagement.service.mapper.IncomeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +27,28 @@ public class IncomeResources {
     }
 
     @GetMapping("/periodDate")
-    public ResponseEntity<List<IncomeDTO>> findByReceivedTimeBetween(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
-        return ResponseEntity.ok(IncomeMapper.INSTANCE.mapToDtos(incomeService.findByReceivedTimeBetween(start,end)));
-    }
-    @GetMapping("/periodDateTotal")
-    public ResponseEntity<Double> totalIncomeBetweenTwoDay(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
-        return ResponseEntity.ok(incomeService.totalIncomeBetweenTwoDay(start,end));
+    public ResponseEntity<List<IncomeDetailsDTO>> findByReceivedTimeBetween(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.findByReceivedTimeBetween(start,end));
     }
 
-    @GetMapping("/cau2")
-    public ResponseEntity<List<Cau2>> cau2(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
-        return ResponseEntity.ok(incomeService.cau2(start,end));
+    @GetMapping("/idAmountIncomeList")
+    public ResponseEntity<List<IdAmountIncomeDTO>> listIdAmountIncomeDTO(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.listIdAmountIncomeDTO(start,end));
+    }
+
+    @GetMapping("/idAmountNameIncomeList")
+    public ResponseEntity<List<idAmountNameIncomeDTO>> listIdAmountNameIncome(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.listIdAmountNameIncome(start,end));
+    }
+
+    @GetMapping("/idAmountIncome")
+    public ResponseEntity<List<IdAmountIncomeDTO>> listIdAmountIncomeDTOByAccountId(@PathVariable int accountId, @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.listIdAmountIncomeDTOByAccountId(start,end,accountId));
+    }
+
+    @GetMapping("/idAmountNameIncome")
+    public ResponseEntity<List<idAmountNameIncomeDTO>> listIdAmountNameIncomeByAccountId(@PathVariable int accountId, @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
+        return ResponseEntity.ok(incomeService.listIdAmountNameIncomeByAccountId(start,end,accountId));
     }
 
 

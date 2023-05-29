@@ -4,12 +4,13 @@ import com.personalproject.jarsmanagement.entity.Income;
 import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
-import com.personalproject.jarsmanagement.service.AccountService;
-import com.personalproject.jarsmanagement.service.AssignService;
-import com.personalproject.jarsmanagement.service.DTO.Cau2;
-import com.personalproject.jarsmanagement.service.DTO.IncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IdAmountIncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.idAmountNameIncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IncomeDetailsDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
+import com.personalproject.jarsmanagement.service.mapper.IncomeDetailsMapper;
 import com.personalproject.jarsmanagement.service.mapper.IncomeMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.jar.JarException;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -33,6 +34,7 @@ public class IncomeServiceImpl implements IncomeService {
     public Income findById(int id) {
         return incomeRepository.findById(id).orElseThrow(JarsManagementException::IncomeNotFound);
     }
+
     @Override
     public IncomeDTO createIncome(IncomeDTO incomeDTO, int accountId) {
 
@@ -48,22 +50,32 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public Double totalIncomeBetweenTwoDay(LocalDate start, LocalDate end) {
-        Double total = findByReceivedTimeBetween(start,end).stream().mapToDouble(Income::getAmount).sum();
-        return total;
-
+    public List<IncomeDetailsDTO> findByReceivedTimeBetween(LocalDate start, LocalDate end) {
+        return IncomeDetailsMapper.INSTANCE.mapToDtos(incomeRepository.findByReceivedTimeBetween(start, end));
     }
 
     @Override
-    public List<Income> findByReceivedTimeBetween(LocalDate start, LocalDate end) {
-        return incomeRepository.findByReceivedTimeBetween(start,end);
+    public List<IdAmountIncomeDTO> listIdAmountIncomeDTO(LocalDate start, LocalDate end) {
+        return incomeRepository.listIdAmountIncomeDTO(start, end);
     }
 
     @Override
-    public List<Cau2> cau2(LocalDate start, LocalDate end) {
-        return incomeRepository.cau2(start,end);
+    public List<idAmountNameIncomeDTO> listIdAmountNameIncome(LocalDate start, LocalDate end) {
+        return incomeRepository.listIdAmountNameIncome(start, end);
     }
 
+    @Override
+    public List<IdAmountIncomeDTO> listIdAmountIncomeDTOByAccountId(LocalDate start, LocalDate end, int accountId) {
+        return incomeRepository.listIdAmountIncomeDTO(start, end).stream()
+                .filter(i -> i.getAccountId() == accountId)
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public List<idAmountNameIncomeDTO> listIdAmountNameIncomeByAccountId(LocalDate start, LocalDate end, int accountId) {
+        return incomeRepository.listIdAmountNameIncome(start, end).stream()
+                .filter(i -> i.getAccountId() == accountId)
+                .collect(Collectors.toList());
 
+    }
 }
