@@ -2,6 +2,7 @@ package com.personalproject.jarsmanagement.api;
 
 import com.personalproject.jarsmanagement.entity.Spending;
 import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
+import com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO;
 import com.personalproject.jarsmanagement.service.DTO.SpendingDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
 import com.personalproject.jarsmanagement.service.SpendingService;
@@ -20,18 +21,30 @@ public class SpendingResources {
     private final SpendingService spendingService;
 
     @PostMapping
-    public ResponseEntity<SpendingDTO> createSpending(@RequestBody SpendingDTO spendingDTO, @PathVariable int accountId){
-        return ResponseEntity.ok(spendingService.createSpending(spendingDTO,accountId));
-    }
-    @GetMapping("/topJars")
-    public ResponseEntity<List<JarDTO>> listJarsBetweenTwoDays(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end){
-        return ResponseEntity.ok(spendingService.listJarsBetweenTwoDays(start,end));
+    public ResponseEntity<SpendingDTO> createSpending(@RequestBody SpendingDTO spendingDTO, @PathVariable int accountId) {
+        return ResponseEntity.ok(spendingService.createSpending(spendingDTO, accountId));
     }
 
-@GetMapping("/jarTop")
-    public ResponseEntity<List<JarDTO>> listJarsByAccountIdBetweenTwoDays(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate start,
-                                                                          @RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate end,
-                                                                          @PathVariable int accountId, @RequestParam int topNumber){
-        return ResponseEntity.ok(spendingService.listJarsByAccountIdBetweenTwoDays(start,end,accountId,topNumber));
-}
+    @GetMapping("/topJars")
+    public ResponseEntity<List<JarDTO>> listJarsBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end) {
+        return ResponseEntity.ok(spendingService.listJarsBetweenTwoDays(start, end));
+    }
+
+    @GetMapping("/jarTop")
+    public ResponseEntity<List<JarDTO>> listJarsByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                                                          @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+                                                                          @PathVariable int accountId, @RequestParam int topNumber) {
+        return ResponseEntity.ok(spendingService.listJarsByAccountIdBetweenTwoDays(start, end, accountId, topNumber));
+    }
+
+    @GetMapping("/purposeTop")
+    public ResponseEntity<List<PurposeDTO>> listPurposeByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                                                              @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+                                                                              @PathVariable int accountId) {
+        return ResponseEntity.ok(spendingService.listPurposeByAccountIdBetweenTwoDays(start, end, accountId));
+    }
+    @GetMapping("/purposeTopByMonth")
+    public ResponseEntity<List<PurposeDTO>> listPurposeByAccountIdByMonthNumber(@PathVariable int accountId, @RequestParam int monthNum) {
+        return ResponseEntity.ok(spendingService.listPurposeByAccountIdByMonthNumber(accountId,monthNum));
+    }
 }

@@ -6,6 +6,7 @@ import com.personalproject.jarsmanagement.repository.MoneyJarRepository;
 import com.personalproject.jarsmanagement.repository.SpendingRepository;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
 import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
+import com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO;
 import com.personalproject.jarsmanagement.service.DTO.SpendingDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.SpendingService;
@@ -71,4 +72,15 @@ public class SpendingServiceImpl implements SpendingService {
                 .limit(topNumber)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<PurposeDTO> listPurposeByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId) {
+        return spendingRepository.listPurposeByAccountIdBetweenTwoDays(start,end,accountId);
+    }
+
+    @Override
+    public List<PurposeDTO> listPurposeByAccountIdByMonthNumber(int accountId, int monthNum) {
+        return spendingRepository.listPurposeByAccountIdByMonthNumber(accountId,monthNum);
+    }
+
 }
