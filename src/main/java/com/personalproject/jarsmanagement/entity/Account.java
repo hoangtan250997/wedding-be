@@ -22,4 +22,7 @@ public class Account {
     private String lastName;
     private String email;
     private String family;
+
+    @Column
+    private String photo;
 }

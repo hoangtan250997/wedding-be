@@ -11,4 +11,5 @@ public class IncomeDTO {
     private Double amount;
     private LocalDate receivedTime;
     private int incomeSourceId;
+    private String incomeSourceName;
 }

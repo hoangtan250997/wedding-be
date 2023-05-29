@@ -15,13 +15,13 @@ import javax.persistence.*;
 public class MoneyJar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Convert(converter = JarTypeAttributeConverter.class)
     private JarType jarType;
 
-    private double balance;
+    private Double balance;
 
-    private double percentage;
+    private Double percentage;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "accountId")

@@ -34,7 +34,7 @@ public class IncomeServiceImpl implements IncomeService {
         return incomeRepository.findById(id).orElseThrow(JarsManagementException::IncomeNotFound);
     }
     @Override
-    public Income createIncome(IncomeDTO incomeDTO, int accountId) {
+    public IncomeDTO createIncome(IncomeDTO incomeDTO, int accountId) {
 
         Income income = new Income();
         income.setAmount(incomeDTO.getAmount());
@@ -44,7 +44,7 @@ public class IncomeServiceImpl implements IncomeService {
         log.info("Automatically call increaseBalance for MoneyJar");
         incomeSourceService.increaseBalance(income.getIncomeSource().getId(), income.getAmount());
 
-        return incomeRepository.save(income);
+        return IncomeMapper.INSTANCE.mapToDto(incomeRepository.save(income));
     }
 
     @Override

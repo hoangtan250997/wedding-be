@@ -8,12 +8,14 @@ import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDTO;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
 import com.personalproject.jarsmanagement.service.mapper.IncomeSourceMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class IncomeSourceServiceImpl implements IncomeSourceService {
     private final IncomeSourceRepository incomeSourceRepository;
@@ -45,6 +47,22 @@ public class IncomeSourceServiceImpl implements IncomeSourceService {
         incomeSource.setAccount(accountRepository.findById(accountId).orElseThrow(JarsManagementException::AccountNotFound));
         incomeSourceRepository.save(incomeSource);
 
+        return IncomeSourceMapper.INSTANCE.mapToDto(incomeSourceRepository.save(incomeSource));
+    }
+
+    @Override
+    public IncomeSourceDTO updateIncomeSource(int incomeSourceId, String newName) {
+        IncomeSource incomeSource = incomeSourceRepository.findById(incomeSourceId).orElseThrow(JarsManagementException::IncomeSourceNotFound);
+        incomeSource.setName(newName);
+
+        return IncomeSourceMapper.INSTANCE.mapToDto(incomeSourceRepository.save(incomeSource));
+    }
+
+    @Override
+    public IncomeSourceDTO updateIncomeSourceBalance(int incomeSourceId, double balance) {
+        log.info("UPDATE INCOME SOURCE BALANCE");
+        IncomeSource incomeSource = incomeSourceRepository.findById(incomeSourceId).orElseThrow(JarsManagementException::IncomeSourceNotFound);
+        incomeSource.setBalance(balance);
         return IncomeSourceMapper.INSTANCE.mapToDto(incomeSourceRepository.save(incomeSource));
     }
 

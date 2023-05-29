@@ -6,12 +6,14 @@ import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDTO;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
 import com.personalproject.jarsmanagement.service.mapper.IncomeSourceMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/{accountId}/incomeSource")
 public class IncomeSourceResources {
@@ -32,6 +34,15 @@ public class IncomeSourceResources {
         return ResponseEntity.ok(incomeSourceService.createIncomeSource(name,accountId));
     }
 
+    @PutMapping("/{incomeSourceId}")
+    ResponseEntity<IncomeSourceDTO> updateIncomeSource(@PathVariable  int incomeSourceId, @RequestParam String newName) {
+        return ResponseEntity.ok(incomeSourceService.updateIncomeSource(incomeSourceId,newName));
+    }
+    @PutMapping("/{incomeSourceId}/balance")
+    ResponseEntity<IncomeSourceDTO> updateIncomeSourceBalance(@PathVariable  int incomeSourceId, @RequestParam int balance) {
+        log.info("UPDATE INCOME SOURCE BALANCE RESOURCE");
+        return ResponseEntity.ok(incomeSourceService.updateIncomeSourceBalance(incomeSourceId,balance));
+    }
 
     @GetMapping("/incomeSourceDetail")
     public List<IncomeSourceDTO> findByIncomeSourceNameAndAccountId(@RequestParam String name,@PathVariable int accountId){

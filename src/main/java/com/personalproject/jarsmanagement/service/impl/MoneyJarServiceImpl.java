@@ -29,15 +29,15 @@ public class MoneyJarServiceImpl implements MoneyJarService {
     private JarTypeAttributeConverter jarTypeAttributeConverter = new JarTypeAttributeConverter();
 
     @Override
-    public Double getBalance(int jarType, int accountId) {
-        if (jarType > JarType.values().length) throw JarsManagementException.badRequest("NotFound", "JarTypeNotFound");
-        return findByAccountIAndJarType(jarType, accountId).getBalance();
+    public Double showBalance(int jarType, int accountId) {
+        return findByAccountIdAndJarType(jarType, accountId).getBalance();
     }
 
     @Override
-    public MoneyJar findByAccountIAndJarType(int accountId, int jarType) {
-        if (jarType > JarType.values().length) throw JarsManagementException.badRequest("NotFound", "JarTypeNotFound");
+    public MoneyJar findByAccountIdAndJarType(int accountId, int jarType) {
+        log.info("FIND BY ACCOUNT ID AND JAR TYPE / MONEY JAR");
         return moneyJarRepository.findByAccountIdAndJarType(accountId, jarTypeAttributeConverter.convertToEntityAttribute(jarType));
+
     }
 
     @Override
@@ -60,15 +60,25 @@ public class MoneyJarServiceImpl implements MoneyJarService {
 
     @Override
     public void increaseBalance(AssignDTO assignDTO) {
-        MoneyJar moneyJar = findByAccountIAndJarType(assignDTO.getAccountId(), assignDTO.getMoneyJarId());
+        log.info("+ BALANCE MONEY JAR ");
+        MoneyJar moneyJar = findByAccountIdAndJarType(assignDTO.getAccountId(), jarTypeAttributeConverter.convertToDatabaseColumn(assignDTO.getJarType()));
+
+
         moneyJar.setBalance(moneyJar.getBalance() + assignDTO.getAmount());
+        log.info("setBalance successfull ");
+
         moneyJarRepository.save(moneyJar);
+        log.info("Increase successfull ");
+
     }
 
     @Override
     public void decreaseBalance(AssignDTO assignDTO) {
-        MoneyJar moneyJar = findByAccountIAndJarType(assignDTO.getAccountId(), assignDTO.getMoneyJarId());
+        log.info("- BALANCE / MONEY JAR ");
+        MoneyJar moneyJar = findByAccountIdAndJarType(assignDTO.getAccountId(), jarTypeAttributeConverter.convertToDatabaseColumn(assignDTO.getJarType()));
+        log.info("setBalance successfull ");
         moneyJar.setBalance(moneyJar.getBalance() - assignDTO.getAmount());
+        log.info("Decrease successfull ");
         moneyJarRepository.save(moneyJar);
     }
 

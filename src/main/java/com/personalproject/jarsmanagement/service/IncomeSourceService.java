@@ -1,5 +1,6 @@
 package com.personalproject.jarsmanagement.service;
 
+import com.personalproject.jarsmanagement.entity.Income;
 import com.personalproject.jarsmanagement.entity.IncomeSource;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
 import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDTO;
@@ -17,12 +18,17 @@ public interface IncomeSourceService {
 
     List<IncomeSourceDTO> findAllIncomeSource();
 
-    IncomeSourceDTO createIncomeSource(String name, int accountId);
-
     List<IncomeSourceDTO> findByIncomeSourceNameAndAccountId(String name, int accountId);
 
-    void increaseBalance(int incomeSourceId,double amount);
+    IncomeSourceDTO createIncomeSource(String name, int accountId);
 
-    void decreaseBalance(int incomeSourceId,double amount);
+    IncomeSourceDTO updateIncomeSource(int incomeSourceId, String newName);
+
+    IncomeSourceDTO updateIncomeSourceBalance(int incomeSourceId, double balance);
+
+
+    void increaseBalance(int incomeSourceId, double amount);
+
+    void decreaseBalance(int incomeSourceId, double amount);
 
 }

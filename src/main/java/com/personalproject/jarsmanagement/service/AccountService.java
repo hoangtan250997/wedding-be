@@ -10,4 +10,6 @@ public interface AccountService {
     List<AccountDTO> findAllAccount();
     AccountDTO createAccount(AccountDTO accountDTO);
 
+    AccountDTO updateAccount(AccountDTO accountDTO, int accountId);
+
 }

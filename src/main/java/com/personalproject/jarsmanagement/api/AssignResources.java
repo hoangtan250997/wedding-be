@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/assign")
+@RequestMapping("/{accountId}/assign")
 public class AssignResources {
     private final AssignService assignService;
 

@@ -10,7 +10,7 @@ import java.util.List;
 public interface IncomeService {
     Income findById(int id);
     List<Income> findByReceivedTimeBetween(LocalDate start, LocalDate end);
-    Income createIncome(IncomeDTO incomeDTO, int accountId);
+    IncomeDTO createIncome(IncomeDTO incomeDTO, int accountId);
 
     Double totalIncomeBetweenTwoDay(LocalDate start, LocalDate end);
     List<Cau2> cau2(LocalDate start, LocalDate end);

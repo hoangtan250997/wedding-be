@@ -15,6 +15,8 @@ public interface SpendingMapper {
 
     @Mapping(target = "accountId", source = "account.id")
     @Mapping(target = "moneyJarId", source = "moneyJar.id")
+    @Mapping(target = "jarType", source = "moneyJar.jarType")
+
     SpendingDTO mapToDto(Spending spending);
 
     List<SpendingDTO> mapToDtos(List<Spending> spendings);

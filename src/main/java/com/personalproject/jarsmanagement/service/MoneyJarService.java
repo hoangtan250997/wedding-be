@@ -12,7 +12,7 @@ public interface MoneyJarService {
 
     void decreaseBalance(AssignDTO assignDTO);
 
-    Double getBalance(int jarType, int accountId);
+    Double showBalance(int jarType, int accountId);
 
-    MoneyJar findByAccountIAndJarType(int accountId, int jarType);
+    MoneyJar findByAccountIdAndJarType(int accountId, int jarType);
 }

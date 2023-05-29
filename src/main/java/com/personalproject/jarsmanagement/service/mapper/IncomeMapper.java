@@ -18,6 +18,7 @@ public interface IncomeMapper {
 
     @Mapping(target = "id", source = "id")
     @Mapping(target = "incomeSourceId", source = "incomeSource.id")
+    @Mapping(target = "incomeSourceName", source = "incomeSource.name")
     @Mapping(target = "receivedTime", source = "receivedTime")
 
     IncomeDTO mapToDto(Income income);

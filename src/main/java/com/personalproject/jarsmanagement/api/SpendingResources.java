@@ -6,10 +6,7 @@ import com.personalproject.jarsmanagement.service.IncomeService;
 import com.personalproject.jarsmanagement.service.SpendingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,8 +15,8 @@ public class SpendingResources {
     private final SpendingService spendingService;
 
     @PostMapping
-    public ResponseEntity<SpendingDTO> createSpending(@RequestBody SpendingDTO spendingDTO){
-        return ResponseEntity.ok(spendingService.createSpending(spendingDTO));
+    public ResponseEntity<SpendingDTO> createSpending(@RequestBody SpendingDTO spendingDTO, @PathVariable int accountId){
+        return ResponseEntity.ok(spendingService.createSpending(spendingDTO,accountId));
     }
 
 

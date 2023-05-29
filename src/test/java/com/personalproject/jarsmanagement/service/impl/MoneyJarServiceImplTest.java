@@ -33,7 +33,7 @@ class MoneyJarServiceImplTest {
 
     @Test
     void getBalance() {
-        assertTrue(moneyJarService.getBalance(1,1)==350);
+        assertTrue(moneyJarService.showBalance(1,1)==350);
     }
 
     @Test

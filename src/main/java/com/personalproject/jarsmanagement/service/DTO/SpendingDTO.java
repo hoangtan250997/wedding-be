@@ -1,6 +1,7 @@
 package com.personalproject.jarsmanagement.service.DTO;
 
 import com.personalproject.jarsmanagement.entity.Account;
+import com.personalproject.jarsmanagement.entity.JarType;
 import com.personalproject.jarsmanagement.entity.MoneyJar;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,4 +24,6 @@ public class SpendingDTO {
     private String purpose;
     private int accountId;
     private int moneyJarId;
+    private JarType jarType;
+
 }

@@ -1,11 +1,8 @@
 package com.personalproject.jarsmanagement.service.impl;
 
-import com.personalproject.jarsmanagement.entity.JarType;
 import com.personalproject.jarsmanagement.entity.MoneyJar;
 import com.personalproject.jarsmanagement.entity.SpendingLimit;
-import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.SpendingLimitRepository;
-import com.personalproject.jarsmanagement.repository.SpendingRepository;
 import com.personalproject.jarsmanagement.service.DTO.SpendingLimitDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.SpendingLimitService;
@@ -24,7 +21,7 @@ public class SpendingLimitServiceImpl implements SpendingLimitService {
     public SpendingLimitDTO createSpendingLimit(SpendingLimitDTO spendingLimitDTO, int accountId, int jarType) {
 
 
-            MoneyJar moneyJar = moneyJarService.findByAccountIAndJarType(accountId, jarType);
+            MoneyJar moneyJar = moneyJarService.findByAccountIdAndJarType(accountId, jarType);
 
             SpendingLimit spendingLimit = new SpendingLimit();
 

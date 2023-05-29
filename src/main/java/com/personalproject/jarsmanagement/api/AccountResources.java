@@ -20,11 +20,16 @@ public class AccountResources {
         return ResponseEntity.ok(accountService.findAllAccount());
     }
 
-    @PostMapping(value = "/signup")
+    @PostMapping
     ResponseEntity<AccountDTO> createAccount(@RequestBody AccountDTO accountDTO) {
         if (accountDTO.getPassword().isEmpty())
             throw JarsManagementException.badRequest("PasswordEmpty", "Password is empty");
         return ResponseEntity.ok(accountService.createAccount(accountDTO));
+    }
+
+    @PutMapping("/{accountId}")
+    ResponseEntity<AccountDTO> updateAccount(@RequestBody AccountDTO accountDTO, @PathVariable int accountId) {
+        return ResponseEntity.ok(accountService.updateAccount(accountDTO,accountId));
     }
 
 

@@ -1,7 +1,9 @@
 package com.personalproject.jarsmanagement.service.impl;
 
 import com.personalproject.jarsmanagement.entity.Account;
+import com.personalproject.jarsmanagement.entity.Role;
 import com.personalproject.jarsmanagement.entity.User;
+import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.service.AccountService;
 import com.personalproject.jarsmanagement.service.DTO.AccountDTO;
@@ -38,22 +40,17 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public AccountDTO createAccount(AccountDTO accountDTO) {
 
+
         //UserDTO from accountDTO -> create User
         UserDTO userDTO = new UserDTO();
-        try {
-            userDTO.setRoles(accountDTO.getRoles());
-            userDTO.setPassword(accountDTO.getPassword());
-            userDTO.setUsername(accountDTO.getUsername());
-            userDTO.setActive(accountDTO.isActive());
-        } catch (Exception e) {
-            log.error("AccountDTO might be incorrect!", e);
-        }
+        userDTO.setRoles(accountDTO.getRoles());
+        userDTO.setPassword(accountDTO.getPassword());
+        userDTO.setUsername(accountDTO.getUsername());
+        userDTO.setActive(accountDTO.isActive());
 
         //Create User
         log.info("Create an user from Account");
-
         User user = userService.createUser(userDTO);
-
         //Create Account
         Account account = new Account();
 
@@ -65,6 +62,21 @@ public class AccountServiceImpl implements AccountService {
 
         //Automatically create 7jars when an account is set up
         moneyJarService.createJars(accountRepository.save(account).getId());
+
+        return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
+
+    }
+
+    @Override
+    public AccountDTO updateAccount(AccountDTO accountDTO, int accountId) {
+        log.info("UPDATE ACCOUNT");
+        Account account = accountRepository.findById(accountId).orElseThrow(JarsManagementException::AccountNotFound);
+        log.info("FOUND ACCOUNT");
+
+        if (accountDTO.getFirstName() != null) account.setFirstName(accountDTO.getFirstName());
+        if (accountDTO.getLastName() != null) account.setLastName(accountDTO.getLastName());
+        if (accountDTO.getEmail() != null) account.setEmail(accountDTO.getEmail());
+        if (accountDTO.getPhoto() != null) account.setPhoto(accountDTO.getPhoto());
 
         return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
     }

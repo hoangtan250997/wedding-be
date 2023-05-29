@@ -1,7 +1,5 @@
 package com.personalproject.jarsmanagement.api;
 
-import com.personalproject.jarsmanagement.entity.JarType;
-import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.mapper.MoneyJarMapper;
@@ -19,12 +17,12 @@ public class MoneyJarResources {
 
     @GetMapping("/specifiedJar")
     ResponseEntity<MoneyJarDTO> findByAccountIAndJarType(@PathVariable int accountId, @RequestParam int jarType) {
-        return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDto(moneyJarService.findByAccountIAndJarType(accountId, jarType)));
+        return ResponseEntity.ok(MoneyJarMapper.INSTANCE.mapToDto(moneyJarService.findByAccountIdAndJarType(accountId, jarType)));
     }
 
     @GetMapping("/{jarType}/balance")
     ResponseEntity<Double> getBalance(@PathVariable int accountId, @PathVariable int jarType) {
-        return ResponseEntity.ok(moneyJarService.getBalance(jarType, accountId));
+        return ResponseEntity.ok(moneyJarService.showBalance(jarType, accountId));
     }
 
     @GetMapping

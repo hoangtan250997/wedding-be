@@ -12,7 +12,7 @@ public class FreeMoney extends AbstractJar {
         MoneyJar moneyJar = new MoneyJar();
         moneyJar.setJarType(JarType.FREE_MONEY);
         moneyJar.setBalance((double) 0);
-        moneyJar.setPercentage(1);
+        moneyJar.setPercentage(1.0);
         return moneyJar;
     }
 }

@@ -21,7 +21,7 @@ public class IncomeResources {
     private final IncomeService incomeService;
 
     @PostMapping
-    public ResponseEntity<Income> createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int accountId){
+    public ResponseEntity<IncomeDTO> createIncome(@RequestBody IncomeDTO incomeDTO,@PathVariable int accountId){
         if (accountId<=0) throw JarsManagementException.badRequest("WrongFormat","accountId must be greater than 0");
         return ResponseEntity.ok(incomeService.createIncome(incomeDTO,accountId));
     }
