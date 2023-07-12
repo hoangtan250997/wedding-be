@@ -1,7 +1,7 @@
 package com.personalproject.jarsmanagement.entity;
 
 public enum Role {
-	ADMIN,
-	CHILD,
-	PARENT
+	ROLE_ADMIN,
+	ROLE_CHILD,
+	ROLE_PARENT
 }

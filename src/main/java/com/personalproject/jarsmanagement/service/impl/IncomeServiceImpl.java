@@ -5,7 +5,7 @@ import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.IncomeRepository;
 import com.personalproject.jarsmanagement.repository.IncomeSourceRepository;
 import com.personalproject.jarsmanagement.service.DTO.Income.IdAmountIncomeDTO;
-import com.personalproject.jarsmanagement.service.DTO.Income.idAmountNameIncomeDTO;
+import com.personalproject.jarsmanagement.service.DTO.Income.IdAmountNameIncomeDTO;
 import com.personalproject.jarsmanagement.service.DTO.Income.IncomeDTO;
 import com.personalproject.jarsmanagement.service.DTO.Income.IncomeDetailsDTO;
 import com.personalproject.jarsmanagement.service.IncomeService;
@@ -37,7 +37,11 @@ public class IncomeServiceImpl implements IncomeService {
 
     @Override
     public IncomeDTO createIncome(IncomeDTO incomeDTO, int accountId) {
+        return null;
+    }
 
+    @Override
+    public IncomeDTO createIncome(IncomeDTO incomeDTO) {
         Income income = new Income();
         income.setAmount(incomeDTO.getAmount());
         income.setIncomeSource(incomeSourceRepository.findById(incomeDTO.getIncomeSourceId()).get());
@@ -45,7 +49,6 @@ public class IncomeServiceImpl implements IncomeService {
         //Automatically increase Jar Balance when an income is created
         log.info("Automatically call increaseBalance for MoneyJar");
         incomeSourceService.increaseBalance(income.getIncomeSource().getId(), income.getAmount());
-
         return IncomeMapper.INSTANCE.mapToDto(incomeRepository.save(income));
     }
 
@@ -60,7 +63,7 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<idAmountNameIncomeDTO> listIdAmountNameIncome(LocalDate start, LocalDate end) {
+    public List<IdAmountNameIncomeDTO> listIdAmountNameIncome(LocalDate start, LocalDate end) {
         return incomeRepository.listIdAmountNameIncome(start, end);
     }
 
@@ -72,7 +75,7 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public List<idAmountNameIncomeDTO> listIdAmountNameIncomeByAccountId(LocalDate start, LocalDate end, int accountId) {
+    public List<IdAmountNameIncomeDTO> listIdAmountNameIncomeByAccountId(LocalDate start, LocalDate end, int accountId) {
         return incomeRepository.listIdAmountNameIncome(start, end).stream()
                 .filter(i -> i.getAccountId() == accountId)
                 .collect(Collectors.toList());

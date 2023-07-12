@@ -1,5 +1,6 @@
 package com.personalproject.jarsmanagement.service.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.personalproject.jarsmanagement.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.util.List;
 public class UserDTO {
     private String principalName;
     private String username;
+    @JsonIgnore
     private String password;
     private boolean active;
     private List<Role> roles;

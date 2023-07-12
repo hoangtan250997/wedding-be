@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class idAmountNameIncomeDTO {
+public class IdAmountNameIncomeDTO {
 
     private int accountId;
     private String incomeSourceName;

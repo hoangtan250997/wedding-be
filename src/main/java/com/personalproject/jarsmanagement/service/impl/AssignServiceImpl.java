@@ -10,6 +10,7 @@ import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
 import com.personalproject.jarsmanagement.service.IncomeSourceService;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.mapper.AssignMapper;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,9 +29,12 @@ public class AssignServiceImpl implements AssignService {
 
     @Override
     public List<AssignDTO> createAssign(int incomeSourceId, double amount) {
+        Double incomeSourceBalance = incomeSourceRepository.findById(incomeSourceId).get().getBalance();
+
+        if (amount > incomeSourceBalance) throw JarsManagementException.OverLimit();
+
         List<Assign> assignList = new ArrayList<>();
         IncomeSource incomeSource = incomeSourceRepository.findById(incomeSourceId).orElseThrow(JarsManagementException::IncomeSourceNotFound);
-        log.info("------------");
         log.info("IncomeSource: " +  incomeSource.getId());
 
         for (int i = 0; i < 6; i++) {

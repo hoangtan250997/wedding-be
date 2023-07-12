@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/{accountId}/assign")
+@RequestMapping("/assign")
 public class AssignResources {
     private final AssignService assignService;
 
     @PostMapping
     public ResponseEntity<Void> createAssigns(@RequestParam int incomeSourceId,@RequestParam double amount){
-        if (amount<=0) throw JarsManagementException.badRequest("WrongFormat","amount must be greater than 0");
+        if (amount<=0) throw JarsManagementException.badRequest("WrongFormat","Amount must be greater than 0");
         assignService.createAssign(incomeSourceId,amount);
         return ResponseEntity.noContent().build();
     }

@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    //Methods
     @Override
-    public User findById(int id) { return userRepository.findById(id).get();}
+    public User findById(int id) {
+        return userRepository.findById(id).get();
+    }
 
     @Override
     public User findByUsername(String userName) {
@@ -49,11 +50,11 @@ public class UserServiceImpl implements UserService {
 
         //Create UserRoleAssignments
         List<UserRoleAssignment> userRoleAssignmentList = new ArrayList<>();
-            //Default Role is CHILD
+        //Default Role is CHILD
         if (userDTO.getRoles() == null) {
             UserRoleAssignment userRoleAssignment = new UserRoleAssignment();
             userRoleAssignment.setUsers(user);
-            userRoleAssignment.setRole(Role.CHILD);
+            userRoleAssignment.setRole(Role.ROLE_CHILD);
             userRoleAssignmentList.add(userRoleAssignment);
 
         } else {
@@ -69,10 +70,6 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
-
-
-
-
 
 
 }

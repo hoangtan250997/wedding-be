@@ -3,7 +3,7 @@ package com.personalproject.jarsmanagement.service.mapper;
 import com.personalproject.jarsmanagement.entity.Account;
 import com.personalproject.jarsmanagement.entity.Role;
 import com.personalproject.jarsmanagement.entity.UserRoleAssignment;
-import com.personalproject.jarsmanagement.service.DTO.AccountDTO;
+import com.personalproject.jarsmanagement.service.DTO.AccountNoPasswordDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface AccountMapper {
+public interface AccountNoPassWordMapper {
 
-    AccountMapper INSTANCE = Mappers.getMapper(AccountMapper.class);
+    AccountNoPassWordMapper INSTANCE = Mappers.getMapper(AccountNoPassWordMapper.class);
     @Named("convert")
     public static List<Role> convert(List<UserRoleAssignment> roleAssignmentList) {
         return roleAssignmentList.stream()
@@ -28,7 +28,7 @@ public interface AccountMapper {
     @Mapping(target = "password",source = "user.password")
     @Mapping(target = "active",source = "user.active")
     @Mapping(target = "roles", source = "user.roles", qualifiedByName = "convert")
-    AccountDTO mapToDto(Account account);
+    AccountNoPasswordDTO mapToDto(Account account);
 
-    List<AccountDTO> mapToDtos(List<Account> accounts);
+    List<AccountNoPasswordDTO> mapToDtos(List<Account> accounts);
 }

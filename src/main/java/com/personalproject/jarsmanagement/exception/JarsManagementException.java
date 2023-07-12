@@ -16,6 +16,9 @@ public class JarsManagementException {
     private static final String INCOME_SOURCE_NOT_FOUND_MSG_KEY = "IncomeSourceNotExisted";
     private static final String INCOME_SOURCE_NOT_FOUND_MSG = "IncomeSource Not Found";
 
+    private static final String OVER_LIMIT_MSG_KEY = "MoneyOverLimit";
+    private static final String OVER_LIMIT_NOT_FOUND_MSG = "Money is over limit";
+
     public static ResponseException notFound(String messageKey, String message) {
         return new ResponseException(messageKey, message, HttpStatus.NOT_FOUND);
     }
@@ -42,5 +45,9 @@ public class JarsManagementException {
 
     public static ResponseException IncomeSourceNotFound() {
         return notFound(INCOME_SOURCE_NOT_FOUND_MSG_KEY, INCOME_SOURCE_NOT_FOUND_MSG);
+    }
+
+    public static ResponseException OverLimit() {
+        return notFound(OVER_LIMIT_MSG_KEY, OVER_LIMIT_NOT_FOUND_MSG);
     }
 }

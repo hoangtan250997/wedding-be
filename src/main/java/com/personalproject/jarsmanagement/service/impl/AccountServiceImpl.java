@@ -1,19 +1,23 @@
 package com.personalproject.jarsmanagement.service.impl;
 
 import com.personalproject.jarsmanagement.entity.Account;
-import com.personalproject.jarsmanagement.entity.Role;
 import com.personalproject.jarsmanagement.entity.User;
 import com.personalproject.jarsmanagement.exception.JarsManagementException;
+import com.personalproject.jarsmanagement.jwt.JwtUtils;
 import com.personalproject.jarsmanagement.repository.AccountRepository;
+import com.personalproject.jarsmanagement.repository.UserRepository;
 import com.personalproject.jarsmanagement.service.AccountService;
+import com.personalproject.jarsmanagement.service.DTO.AccountNoPasswordDTO;
 import com.personalproject.jarsmanagement.service.DTO.AccountDTO;
 import com.personalproject.jarsmanagement.service.DTO.UserDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.UserService;
+import com.personalproject.jarsmanagement.service.mapper.AccountNoPassWordMapper;
 import com.personalproject.jarsmanagement.service.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -22,10 +26,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final AccountRepository accountRepository;
-
+    private final UserRepository userRepository;
     private final UserService userService;
     private final MoneyJarService moneyJarService;
 
+    final private JwtUtils jwtUtils;
 
     @Override
     public Account findById(int id) {
@@ -38,8 +43,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO createAccount(AccountDTO accountDTO) {
+    public AccountNoPasswordDTO createAccount(AccountDTO accountDTO) {
+        if (accountDTO.getPassword().isEmpty())
+            throw JarsManagementException.badRequest("PasswordEmpty", "Password is empty");
 
+        log.info("CREATE AN ACCOUNT");
 
         //UserDTO from accountDTO -> create User
         UserDTO userDTO = new UserDTO();
@@ -49,7 +57,6 @@ public class AccountServiceImpl implements AccountService {
         userDTO.setActive(accountDTO.isActive());
 
         //Create User
-        log.info("Create an user from Account");
         User user = userService.createUser(userDTO);
         //Create Account
         Account account = new Account();
@@ -63,14 +70,14 @@ public class AccountServiceImpl implements AccountService {
         //Automatically create 7jars when an account is set up
         moneyJarService.createJars(accountRepository.save(account).getId());
 
-        return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
+        return AccountNoPassWordMapper.INSTANCE.mapToDto(accountRepository.save(account));
 
     }
 
     @Override
-    public AccountDTO updateAccount(AccountDTO accountDTO, int accountId) {
+    public AccountDTO updateAccount(AccountDTO accountDTO, String token) {
         log.info("UPDATE ACCOUNT");
-        Account account = accountRepository.findById(accountId).orElseThrow(JarsManagementException::AccountNotFound);
+        Account account = accountRepository.findByToken(token);
         log.info("FOUND ACCOUNT");
 
         if (accountDTO.getFirstName() != null) account.setFirstName(accountDTO.getFirstName());
@@ -81,5 +88,14 @@ public class AccountServiceImpl implements AccountService {
         return AccountMapper.INSTANCE.mapToDto(accountRepository.save(account));
     }
 
+    public Account getAccountFromToken(String token) {
+        String nameToken = "";
+        String username = null;
+        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+            nameToken = token.substring(7);
+            username = jwtUtils.getUserNameFromJwtToken(nameToken);
+        }
+           return accountRepository.findByToken(username);
+    }
 
 }

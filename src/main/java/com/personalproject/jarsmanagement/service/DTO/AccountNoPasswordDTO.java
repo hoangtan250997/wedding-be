@@ -7,10 +7,10 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class AccountDTO {
+public class AccountNoPasswordDTO {
     private int id;
     private String username;
-//    @JsonIgnore
+    @JsonIgnore
     private String password;
     private boolean active;
     private List<Role> roles;

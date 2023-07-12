@@ -1,7 +1,6 @@
 package com.personalproject.jarsmanagement.repository;
 
 import com.personalproject.jarsmanagement.entity.Spending;
-import com.personalproject.jarsmanagement.service.DTO.Income.idAmountNameIncomeDTO;
 import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
 import com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO;
 import org.springframework.data.jpa.repository.JpaRepository;

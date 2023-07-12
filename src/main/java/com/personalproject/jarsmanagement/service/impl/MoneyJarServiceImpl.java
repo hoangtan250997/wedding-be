@@ -1,15 +1,18 @@
 package com.personalproject.jarsmanagement.service.impl;
 
+import com.personalproject.jarsmanagement.entity.IncomeSource;
 import com.personalproject.jarsmanagement.entity.JarType;
 import com.personalproject.jarsmanagement.entity.MoneyJar;
 import com.personalproject.jarsmanagement.exception.JarsManagementException;
 import com.personalproject.jarsmanagement.repository.AccountRepository;
 import com.personalproject.jarsmanagement.repository.MoneyJarRepository;
 import com.personalproject.jarsmanagement.service.DTO.AssignDTO;
+import com.personalproject.jarsmanagement.service.DTO.IncomeSourceDTO;
 import com.personalproject.jarsmanagement.service.DTO.MoneyJarDTO;
 import com.personalproject.jarsmanagement.service.MoneyJarService;
 import com.personalproject.jarsmanagement.service.factorymethod.AbstractJar;
 import com.personalproject.jarsmanagement.service.factorymethod.JarsFactory;
+import com.personalproject.jarsmanagement.service.mapper.IncomeSourceMapper;
 import com.personalproject.jarsmanagement.service.mapper.JarTypeAttributeConverter;
 import com.personalproject.jarsmanagement.service.mapper.MoneyJarMapper;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +52,16 @@ public class MoneyJarServiceImpl implements MoneyJarService {
     }
 
     @Override
+    public MoneyJarDTO updateJarBalance(int moneyJarId, double balance) {
+        log.info("UPDATE JAR SOURCE BALANCE");
+        MoneyJar moneyJar = moneyJarRepository.findById(moneyJarId).get();
+        moneyJar.setBalance(balance);
+        return MoneyJarMapper.INSTANCE.mapToDto(moneyJarRepository.save(moneyJar));
+    }
+
+    @Override
     public List<MoneyJar> createJars(int accountId) {
-        log.info("Create 7 jars");
+        log.info("CREATE 7 JARS");
 
         List<MoneyJar> jars = new ArrayList<>();
 
@@ -73,10 +84,10 @@ public class MoneyJarServiceImpl implements MoneyJarService {
 
 
         moneyJar.setBalance(moneyJar.getBalance() + assignDTO.getAmount());
-        log.info("setBalance successfull ");
+        log.info("SET BALANCE SUCCESSFUL ");
 
         moneyJarRepository.save(moneyJar);
-        log.info("Increase successfull ");
+        log.info("INCREASE MONEY JAR BALANCE SUCCESSFUL ");
 
     }
 
@@ -84,9 +95,9 @@ public class MoneyJarServiceImpl implements MoneyJarService {
     public void decreaseBalance(AssignDTO assignDTO) {
         log.info("- BALANCE / MONEY JAR ");
         MoneyJar moneyJar = findByAccountIdAndJarType(assignDTO.getAccountId(), jarTypeAttributeConverter.convertToDatabaseColumn(assignDTO.getJarType()));
-        log.info("setBalance successfull ");
+        log.info("SET BALANCE SUCCESSFUL ");
         moneyJar.setBalance(moneyJar.getBalance() - assignDTO.getAmount());
-        log.info("Decrease successfull ");
+        log.info("INCREASE MONEY JAR BALANCE SUCCESSFUL ");
         moneyJarRepository.save(moneyJar);
     }
 
