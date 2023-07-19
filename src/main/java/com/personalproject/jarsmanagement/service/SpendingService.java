@@ -15,6 +15,7 @@ public interface SpendingService {
     List<JarDTO> listJarsByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  String token, int topnumber);
 
     List<PurposeDTO> listPurposeByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  int accountId);
+    List<SpendingDTO> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  int accountId);
 
     List<PurposeDTO> listPurposeByAccountIdByMonthNumber( int accountId,int monthNum);
 

@@ -89,6 +89,11 @@ public class SpendingServiceImpl implements SpendingService {
     }
 
     @Override
+    public List<SpendingDTO> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId) {
+        return spendingRepository.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId);
+    }
+
+    @Override
     public List<PurposeDTO> listPurposeByAccountIdByMonthNumber(int accountId, int monthNum) {
         return spendingRepository.listPurposeByAccountIdByMonthNumber(accountId, monthNum);
     }

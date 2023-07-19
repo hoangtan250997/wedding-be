@@ -41,6 +41,13 @@ public class SpendingResources {
         return ResponseEntity.ok(spendingService.listJarsByAccountIdBetweenTwoDays(start, end, token, topNumber));
     }
 
+    @GetMapping("/spending-list")
+    public ResponseEntity<List<PurposeDTO>> getSpendingListByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+                                                                                 @RequestHeader("Authorization") String token) {
+        int accountId = accountService.getAccountFromToken(token).getId();
+        return ResponseEntity.ok(spendingService.listPurposeByAccountIdBetweenTwoDays(start, end, accountId));
+    }
     @GetMapping("/purposeTop")
     public ResponseEntity<List<PurposeDTO>> listPurposeByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
