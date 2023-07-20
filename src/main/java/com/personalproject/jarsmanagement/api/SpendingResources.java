@@ -40,7 +40,7 @@ public class SpendingResources {
     @GetMapping("/excel-file")
     public ResponseEntity<Void> exportExcelFile(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
-                                                @RequestHeader("Authorization") String token) {
+                                                @RequestHeader("Authorization") String token) throws IllegalAccessException {
         int accountId = accountService.getAccountFromToken(token).getId();
         spendingServiceImple.exportExcelFile(start, end, accountId);
         return ResponseEntity.noContent().build();

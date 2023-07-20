@@ -24,11 +24,9 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.lang.reflect.Field;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -103,7 +101,7 @@ public class SpendingServiceImpl implements SpendingService {
         return SpendingMapper.INSTANCE.mapToDtos(spendingRepository.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId));
     }
 
-    public void exportExcelFile(LocalDate start, LocalDate end, int accountId) {
+    public void exportExcelFile(LocalDate start, LocalDate end, int accountId) throws IllegalAccessException {
 
         List<SpendingDTO> spendingList = SpendingMapper.INSTANCE.mapToDtos(spendingRepository.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId));
 
@@ -111,20 +109,17 @@ public class SpendingServiceImpl implements SpendingService {
 
         HSSFSheet sheet = workbook.createSheet("Spending Data");
 
-        Map<String, SpendingDTO> data = new TreeMap<String, SpendingDTO>();
-//        data.put("0",new Object[]{"id","amount","spendingTime","purpose","accountId","moneyJarId","jarType"});
         Row row = sheet.createRow(0);
         int cellnum = 0;
-        Cell cell = row.createCell(cellnum++);
-        cell.setCellValue("id");
-        cell = row.createCell(cellnum++);
-        cell.setCellValue("amount");
-        cell = row.createCell(cellnum++);
-        cell.setCellValue("spendingTime");
-        cell = row.createCell(cellnum++);
-        cell.setCellValue("purpose");
-        cell = row.createCell(cellnum++);
-        cell.setCellValue("jarType");
+        String[] titles = {"id", "amount", "spendingTime", "purpose", "jarType"};
+        for (String title : titles
+        ) {
+            Cell cell = row.createCell(cellnum++);
+            cell.setCellValue(title);
+        }
+
+        Map<String, SpendingDTO> data = new TreeMap<String, SpendingDTO>();
+
         for (int i = 0; i < spendingList.size(); i++) {
             data.put(String.valueOf(i), spendingList.get(i));
         }
@@ -134,20 +129,20 @@ public class SpendingServiceImpl implements SpendingService {
             row = sheet.createRow(rownum++);
             SpendingDTO objArr = data.get(key);
             cellnum = 0;
-            cell = row.createCell(cellnum++);
-            cell.setCellValue(objArr.getId());
-            cell = row.createCell(cellnum++);
-            cell.setCellValue(objArr.getAmount());
-            cell = row.createCell(cellnum++);
-            cell.setCellValue(objArr.getSpendingTime());
-            cell = row.createCell(cellnum++);
-            cell.setCellValue(objArr.getPurpose());
-            cell = row.createCell(cellnum++);
-            cell.setCellValue(objArr.getJarType().toString());
+            Class<? extends SpendingDTO> clazz = objArr.getClass();
+            for (Field field : clazz.getDeclaredFields()
+            ) {
+                field.setAccessible(true);
+                Object value = field.get(objArr);
+
+                if (!field.getName().equals("accountId") && !field.getName().equals("moneyJarId")) {
+                    Cell cell = row.createCell(cellnum++);
+                    cell.setCellValue(value.toString());
+                }
+            }
         }
         try {
             long currentTimeMillis = System.currentTimeMillis();
-
             String fileName = "spendinglist" + currentTimeMillis + ".xlsx";
             FileOutputStream out = new FileOutputStream(new File(fileName));
             workbook.write(out);
