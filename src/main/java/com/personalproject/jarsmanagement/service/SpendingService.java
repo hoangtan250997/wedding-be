@@ -1,5 +1,6 @@
 package com.personalproject.jarsmanagement.service;
 
+import com.personalproject.jarsmanagement.entity.Spending;
 import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
 import com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO;
 import com.personalproject.jarsmanagement.service.DTO.SpendingDTO;
@@ -15,7 +16,7 @@ public interface SpendingService {
     List<JarDTO> listJarsByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  String token, int topnumber);
 
     List<PurposeDTO> listPurposeByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  int accountId);
-    List<SpendingDTO> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  int accountId);
+    List<SpendingDTO> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId);
 
     List<PurposeDTO> listPurposeByAccountIdByMonthNumber( int accountId,int monthNum);
 

@@ -36,7 +36,7 @@ public interface SpendingRepository extends JpaRepository<Spending, Integer> {
     @Query("SELECT s " +
             "FROM Spending s " +
             "WHERE s.spendingTime BETWEEN ?1 AND ?2 AND s.account.id=?3 ")
-    List<SpendingDTO> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId);
+    List<Spending> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId);
     @Query("SELECT new com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO(s.account.id, s.purpose, sum(s.amount)) " +
             "FROM Spending s " +
             "WHERE EXTRACT(MONTH FROm s.spendingTime) = ?2 AND s.account.id =?1 " +

@@ -15,10 +15,13 @@ import com.personalproject.jarsmanagement.service.SpendingService;
 import com.personalproject.jarsmanagement.service.mapper.SpendingMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -90,12 +93,30 @@ public class SpendingServiceImpl implements SpendingService {
 
     @Override
     public List<SpendingDTO> getSpendingListByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId) {
-        return spendingRepository.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId);
+        return SpendingMapper.INSTANCE.mapToDtos(spendingRepository.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId));
     }
+
+    public void exportExcelFile(LocalDate start, LocalDate end, int accountId) {
+
+        List<SpendingDTO> spendingList = SpendingMapper.INSTANCE.mapToDtos(spendingRepository.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId));
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+
+        HSSFSheet sheet = workbook.createSheet("Spending Data");
+
+        Map<String, Object[]> data =new TreeMap<String,Object[]>();
+        data.put("0",new Object[]{"id","amount","spendingTime","purpose","accountId","moneyJarId","jarType"});
+        for (int i=0;i<spendingList.size();i++) {
+            data.put(i+1, spendingList.get(i));
+        }
+    }
+
 
     @Override
     public List<PurposeDTO> listPurposeByAccountIdByMonthNumber(int accountId, int monthNum) {
         return spendingRepository.listPurposeByAccountIdByMonthNumber(accountId, monthNum);
     }
+
+
 
 }

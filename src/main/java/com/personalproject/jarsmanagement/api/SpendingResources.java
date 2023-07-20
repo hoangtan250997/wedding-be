@@ -1,5 +1,6 @@
 package com.personalproject.jarsmanagement.api;
 
+import com.personalproject.jarsmanagement.entity.Spending;
 import com.personalproject.jarsmanagement.service.AccountService;
 import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
 import com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO;
@@ -42,11 +43,11 @@ public class SpendingResources {
     }
 
     @GetMapping("/spending-list")
-    public ResponseEntity<List<PurposeDTO>> getSpendingListByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                                                                 @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
-                                                                                 @RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<SpendingDTO>> getSpendingListByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+                                                                                   @RequestHeader("Authorization") String token) {
         int accountId = accountService.getAccountFromToken(token).getId();
-        return ResponseEntity.ok(spendingService.listPurposeByAccountIdBetweenTwoDays(start, end, accountId));
+        return ResponseEntity.ok(spendingService.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId));
     }
     @GetMapping("/purposeTop")
     public ResponseEntity<List<PurposeDTO>> listPurposeByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
