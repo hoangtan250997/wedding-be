@@ -17,10 +17,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -77,7 +84,7 @@ public class SpendingServiceImpl implements SpendingService {
     }
 
     @Override
-    public List<JarDTO> listJarsByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,  String token, int topNumber) {
+    public List<JarDTO> listJarsByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, String token, int topNumber) {
 
         int accountId = accountService.getAccountFromToken(token).getId();
 
@@ -87,7 +94,7 @@ public class SpendingServiceImpl implements SpendingService {
     }
 
     @Override
-    public List<PurposeDTO> listPurposeByAccountIdBetweenTwoDays(LocalDate start, LocalDate end,int accountId) {
+    public List<PurposeDTO> listPurposeByAccountIdBetweenTwoDays(LocalDate start, LocalDate end, int accountId) {
         return spendingRepository.listPurposeByAccountIdBetweenTwoDays(start, end, accountId);
     }
 
@@ -104,10 +111,49 @@ public class SpendingServiceImpl implements SpendingService {
 
         HSSFSheet sheet = workbook.createSheet("Spending Data");
 
-        Map<String, Object[]> data =new TreeMap<String,Object[]>();
-        data.put("0",new Object[]{"id","amount","spendingTime","purpose","accountId","moneyJarId","jarType"});
-        for (int i=0;i<spendingList.size();i++) {
-            data.put(i+1, spendingList.get(i));
+        Map<String, SpendingDTO> data = new TreeMap<String, SpendingDTO>();
+//        data.put("0",new Object[]{"id","amount","spendingTime","purpose","accountId","moneyJarId","jarType"});
+        Row row = sheet.createRow(0);
+        int cellnum = 0;
+        Cell cell = row.createCell(cellnum++);
+        cell.setCellValue("id");
+        cell = row.createCell(cellnum++);
+        cell.setCellValue("amount");
+        cell = row.createCell(cellnum++);
+        cell.setCellValue("spendingTime");
+        cell = row.createCell(cellnum++);
+        cell.setCellValue("purpose");
+        cell = row.createCell(cellnum++);
+        cell.setCellValue("jarType");
+        for (int i = 0; i < spendingList.size(); i++) {
+            data.put(String.valueOf(i), spendingList.get(i));
+        }
+        Set<String> keyset = data.keySet();
+        int rownum = 1;
+        for (String key : keyset) {
+            row = sheet.createRow(rownum++);
+            SpendingDTO objArr = data.get(key);
+            cellnum = 0;
+            cell = row.createCell(cellnum++);
+            cell.setCellValue(objArr.getId());
+            cell = row.createCell(cellnum++);
+            cell.setCellValue(objArr.getAmount());
+            cell = row.createCell(cellnum++);
+            cell.setCellValue(objArr.getSpendingTime());
+            cell = row.createCell(cellnum++);
+            cell.setCellValue(objArr.getPurpose());
+            cell = row.createCell(cellnum++);
+            cell.setCellValue(objArr.getJarType().toString());
+        }
+        try {
+            long currentTimeMillis = System.currentTimeMillis();
+
+            String fileName = "spendinglist" + currentTimeMillis + ".xlsx";
+            FileOutputStream out = new FileOutputStream(new File(fileName));
+            workbook.write(out);
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -116,7 +162,6 @@ public class SpendingServiceImpl implements SpendingService {
     public List<PurposeDTO> listPurposeByAccountIdByMonthNumber(int accountId, int monthNum) {
         return spendingRepository.listPurposeByAccountIdByMonthNumber(accountId, monthNum);
     }
-
 
 
 }

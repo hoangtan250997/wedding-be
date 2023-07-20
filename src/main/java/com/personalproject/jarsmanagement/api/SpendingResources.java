@@ -6,6 +6,7 @@ import com.personalproject.jarsmanagement.service.DTO.Spending.JarDTO;
 import com.personalproject.jarsmanagement.service.DTO.Spending.PurposeDTO;
 import com.personalproject.jarsmanagement.service.DTO.SpendingDTO;
 import com.personalproject.jarsmanagement.service.SpendingService;
+import com.personalproject.jarsmanagement.service.impl.SpendingServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping("/spending")
 public class SpendingResources {
     private final SpendingService spendingService;
+    private final SpendingServiceImpl spendingServiceImple;
     private final AccountService accountService;
 
 
@@ -35,6 +37,18 @@ public class SpendingResources {
         return ResponseEntity.ok(spendingService.listJarsBetweenTwoDays(start, end));
     }
 
+    @GetMapping("/excel-file")
+    public ResponseEntity<Void> exportExcelFile(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
+                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+                                                @RequestHeader("Authorization") String token) {
+        int accountId = accountService.getAccountFromToken(token).getId();
+        spendingServiceImple.exportExcelFile(start, end, accountId);
+        return ResponseEntity.noContent().build();
+
+    }
+
+    ;
+
     @GetMapping("/jarTop")
     public ResponseEntity<List<JarDTO>> listJarsByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
@@ -44,11 +58,12 @@ public class SpendingResources {
 
     @GetMapping("/spending-list")
     public ResponseEntity<List<SpendingDTO>> getSpendingListByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
-                                                                                   @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
-                                                                                   @RequestHeader("Authorization") String token) {
+                                                                                      @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
+                                                                                      @RequestHeader("Authorization") String token) {
         int accountId = accountService.getAccountFromToken(token).getId();
         return ResponseEntity.ok(spendingService.getSpendingListByAccountIdBetweenTwoDays(start, end, accountId));
     }
+
     @GetMapping("/purposeTop")
     public ResponseEntity<List<PurposeDTO>> listPurposeByAccountIdBetweenTwoDays(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate start,
                                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate end,
