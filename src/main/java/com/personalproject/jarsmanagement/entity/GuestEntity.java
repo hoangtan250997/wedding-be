@@ -1,30 +1,29 @@
 package com.personalproject.jarsmanagement.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Account {
+@Builder
+public class GuestEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
-    @JoinColumn(name = "username")
-    private User user;
-    private String firstName;
-    private String lastName;
-    @Email
-    private String email;
-    private String family;
+    private String name;
 
-    @Column
-    private String photo;
+    private String num;
+    private String wish;
+
+
+
+
 }

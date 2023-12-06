@@ -3,12 +3,12 @@ package com.personalproject.jarsmanagement.service.DTO;
 import lombok.Data;
 
 @Data
-public class IncomeSourceDTO {
+public class GuestDTO {
     private int id;
     private String name;
-    private Double balance;
-    private int accountId;
-    private String accountName;
+
+    private String num;
+    private String wish;
 
 
 }
