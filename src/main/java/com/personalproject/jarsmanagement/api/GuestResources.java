@@ -1,5 +1,6 @@
 package com.personalproject.jarsmanagement.api;
 
+import com.personalproject.jarsmanagement.entity.GuestEntity;
 import com.personalproject.jarsmanagement.service.DTO.GuestDTO;
 import com.personalproject.jarsmanagement.service.GuestService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class GuestResources {
          return ResponseEntity.ok(guestService.findAllGuest());
     }
     @PostMapping
-    ResponseEntity<GuestDTO> createGuest(@RequestBody GuestDTO guestDTO) {
+    ResponseEntity<GuestEntity> createGuest(@RequestBody GuestDTO guestDTO) {
 
             return ResponseEntity.ok(guestService.createGuest(guestDTO));
 

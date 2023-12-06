@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,17 +25,19 @@ public class GuestServiceImpl implements GuestService {
     }
 
     @Override
-    public GuestDTO createGuest(GuestDTO guestDTO) {
+    public GuestEntity createGuest(GuestDTO guestDTO) {
 
         GuestEntity guestEntity = GuestEntity.builder()
                 .name(guestDTO.getName())
                 .num(guestDTO.getNum())
+                .checked(guestDTO.getChecked())
                 .wish(guestDTO.getWish())
+                .time(LocalDateTime.now())
                 .build();
 
         guestRepository.save(guestEntity);
 
-        return GuestMapper.INSTANCE.mapToDto(guestRepository.save(guestEntity));
+        return guestRepository.save(guestEntity);
     }
 
 
